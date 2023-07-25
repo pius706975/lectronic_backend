@@ -52,6 +52,26 @@ module.exports = {
     `)
 
     await queryInterface.sequelize.query(`
+      CREATE TABLE IF NOT EXISTS reviews (
+        review_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        user_id UUID NOT NULL,
+        product_id UUID NOT NULL,
+        comment TEXT,
+        rating NUMERIC(2, 1),
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW(),
+        CONSTRAINT fk_users
+          FOREIGN KEY(user_id)
+            REFERENCES users(user_id)
+            ON DELETE CASCADE,
+        CONSTRAINT fk_products
+          FOREIGN KEY(product_id)
+            REFERENCES products(product_id)
+            ON DELETE CASCADE
+      )
+    `)
+
+    await queryInterface.sequelize.query(`
       CREATE TABLE IF NOT EXISTS cart (
         cart_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         user_id UUID NOT NULL,
@@ -82,6 +102,7 @@ module.exports = {
         qty INT,
         discount INT,
         total INT,
+        is_paid BOOLEAN DEFAULT FALSE,
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW(),
         CONSTRAINT fk_products
@@ -99,6 +120,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS payment`)
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS cart`)
+    await queryInterface.sequelize.query(`DROP TABLE IF EXISTS reviews`)
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS users`)
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS products`)
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS categories`)
