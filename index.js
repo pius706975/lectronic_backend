@@ -3,7 +3,7 @@ const appServer = express()
 const cors = require('cors')
 const response = require('./src/libs/responses')
 const router = require('./src/router/routers')
-const db = require('./src/database/db.config')
+const db = require('./src/database/db_config/db.config')
 const port = process.env.APP_PORT
 
 appServer.use(express.json())
