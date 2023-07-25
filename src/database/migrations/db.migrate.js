@@ -9,7 +9,7 @@ module.exports = {
         name VARCHAR NOT NULL,
         email VARCHAR NOT NULL,
         password VARCHAR NOT NULL,
-        address VARCHAR,
+        address TEXT,
         phone_number VARCHAR,
         date_of_birth VARCHAR,
         gender VARCHAR,

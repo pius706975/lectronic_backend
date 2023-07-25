@@ -12,7 +12,7 @@ appServer.use(router)
 appServer.use(cors())
 
 appServer.all('*', (req, res, next)=>{
-    response(res, 404, 'Sorry!\n Page not found')
+    response(res, 404, 'Sorry! Page not found')
 })
 
 db.connect()

@@ -1,4 +1,4 @@
-const response = require('../libs/response')
+const response = require('./responses')
 const mailer = require('nodemailer')
 require('dotenv').config()
 
