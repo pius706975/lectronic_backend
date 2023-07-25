@@ -14,7 +14,7 @@ module.exports = {
         date_of_birth VARCHAR,
         gender VARCHAR,
         image VARCHAR,
-        role VARCHAR,
+        role VARCHAR DEFAULT user,
         token_verify VARCHAR,
         is_verified BOOLEAN DEFAULT FALSE,
         created_at TIMESTAMP DEFAULT NOW(),
