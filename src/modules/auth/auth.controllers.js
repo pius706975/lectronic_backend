@@ -38,7 +38,46 @@ controllers.Register = async (req, res)=>{
         
         const result = await models.Register(queries)
 
-        return response(res, 200, {users: result, status: 'Verify email is resent', resend: resendVerificationLink})
+        return response(res, 200, {
+            users: result, 
+            status: 'Check your email! We have sent you a verification link.', 
+            resend: resendVerificationLink
+        })
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error)
+    }
+}
+
+controllers.VerifyEmail = async (req, res)=>{
+
+    try {
+        const token = {token_verify: req.query.token}
+        const result = await models.TokenVerify(token)
+
+        if (result.length <= 0) {
+            return response(res, 401, {message: 'Your account is not verified yet'})
+        }
+
+        const user = result[0]
+
+        if (user.token_verify !== token.token_verify) {
+            return response(res, 401, {message: 'Email verification failed'})
+        } else if (user.is_verified === true) {
+            return response(res, 401, {message: 'Email has been verified'})
+        }
+
+        const queries = {
+            is_verified: true,
+            name: user.name
+        }
+
+        const verifyEmail = await models.VerifyEmail(queries)
+
+        return response(res, 200, {
+            user: verifyEmail,
+            message: 'Email is verified'
+        })
     } catch (error) {
         console.log(error)
         return response(res, 500, error)

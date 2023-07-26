@@ -15,6 +15,7 @@ appServer.all('*', (req, res, next)=>{
     response(res, 404, 'Sorry! Page not found')
 })
 
+
 db.connect()
 .then(()=>{
     console.log("DB connected")

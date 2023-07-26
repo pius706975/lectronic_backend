@@ -17,7 +17,7 @@ const sendEmail = async (email, subject, link)=>{
             to: email,
             subject: subject,
             text: 'Please verify your email\n' + link,
-            html: `<a href="${link}">Click this link</a>`
+            html: `<a href="${link}">Verification link</a>`
         })
     } catch (error) {
         return response(res, 500, error)
