@@ -16,6 +16,7 @@ module.exports = {
         image VARCHAR,
         role VARCHAR DEFAULT 'user',
         token_verify VARCHAR,
+        token_expire TIMESTAMP,
         is_verified BOOLEAN DEFAULT FALSE,
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW()
