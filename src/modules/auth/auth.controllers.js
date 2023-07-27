@@ -70,7 +70,7 @@ controllers.VerifyEmail = async (req, res)=>{
             return response(res, 401, {message: 'Email verification failed'})
         } else if (user.is_verified === true) {
             return response(res, 401, {message: 'Email has been verified'})
-        } else if (expireAt < expiredToken) {
+        } else if (expiredAt < expiredToken) {
             return response(res, 401, {message: 'This link is expired, resend the verification link!'})
         }
 
