@@ -15,6 +15,7 @@ module.exports = {
         gender VARCHAR,
         image VARCHAR,
         role VARCHAR DEFAULT 'user',
+        refresh_token VARCHAR,
         token_verify VARCHAR,
         token_expire TIMESTAMP,
         is_verified BOOLEAN DEFAULT FALSE,
@@ -116,6 +117,14 @@ module.exports = {
             ON DELETE CASCADE
       )
     `)
+
+    await queryInterface.sequelize.query(`
+      CREATE TABLE IF NOT EXISTS blacklist_token (
+        blacklist_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        blacklist_token VARCHAR,
+        created_at TIMESTAMP DEFAULT NOW()
+      )
+    `)
   },
 
   async down (queryInterface, Sequelize) {
@@ -125,5 +134,6 @@ module.exports = {
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS users`)
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS products`)
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS categories`)
+    // await queryInterface.sequelize.query(`DROP TABLE IF EXISTS blacklist_token`)
   }
 };

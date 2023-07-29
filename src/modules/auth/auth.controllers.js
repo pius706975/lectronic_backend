@@ -51,6 +51,34 @@ controllers.Register = async (req, res)=>{
     }
 }
 
+controllers.Login = async (req, res)=>{
+    try {
+        const {email, password} = req.body
+        const result = await models.Login({email: email})
+        
+        const user = result[0]
+        if (!user) {
+            return response(res, 401, {message: 'Email is incorrect'})
+        }
+
+        const comparedData = await bcrypt.compareSync(password, user.password)
+        if (!comparedData) {
+            return response(res, 401, {message: 'Password is incorrect'})
+        } else if (user.is_verified === false) {
+            return response(res, 401, {message: 'You need to verify your account'})
+        }
+
+        delete user.password
+        const token = `Bearer ${jwt.sign(user, process.env.JWT_SECRET, {expiresIn: '1d'})}`
+        const responseData = {token}
+
+        return response(res, 200, responseData)
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error)
+    }
+}
+
 controllers.VerifyEmail = async (req, res)=>{
 
     try {
