@@ -12,7 +12,7 @@ controllers.Register = async (req, res)=>{
         const saltRounds = 10
         const hashedPassword = await bcrypt.hashSync(req.body.password, saltRounds)
         const token_verify = await crypto.randomBytes(16).toString('hex')
-        const expiredToken = new Date(Date.now( + 20000 * 60))
+        const expiredToken = new Date(Date.now() + 20000 * 60)
         const emailExists = await models.Login({email: req.body.email})
 
         if (!req.body.email || !req.body.password) {

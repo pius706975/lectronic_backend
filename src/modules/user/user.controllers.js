@@ -14,4 +14,16 @@ controller.DeleteUser = async (req, res)=>{
     }
 }
 
+controller.GetProfile = async (req, res)=>{
+
+    try {
+        const user = req.userData
+        const getProfile = await models.GetProfile({user_id: user.user_id})
+        return response(res, 200, getProfile)
+    } catch (error) {
+        console.log(error)
+        return response()
+    }
+}
+
 module.exports = controller

@@ -5,4 +5,6 @@ const middle = require('../../middleware/middle.auth')
 
 userRouters.delete('/', middle.Authentication, ctrl.DeleteUser)
 
+userRouters.get('/', middle.Authentication, ctrl.GetProfile)
+
 module.exports = userRouters
