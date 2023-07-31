@@ -69,4 +69,64 @@ models.ResendVerification = ({token_verify, token_expire, email})=>{
     })
 }
 
+models.RefreshToken = ({refresh_token, email})=>{
+    
+    return new Promise((resolve, reject)=>{
+        db.query(`UPDATE users SET refresh_token = $1 WHERE email = $2 RETURNING *`, [refresh_token, email])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.RefreshTokenCheck = ({refresh_token})=>{
+    
+    return new Promise((resolve, reject)=>{
+        db.query(`SELECT * FROM users WHERE refresh_token = $1`, [refresh_token])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.AddBlacklist = ({blacklist_token})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`INSERT INTO blacklist_token (blacklist_token) VALUES ($1)`, [blacklist_token])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.BlacklistCheck = ({blacklist_token})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`SELECT * FROM blacklist_token WHERE blacklist_token = $1`, [blacklist_token])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.autoRemoveBlacklistToken = ()=>{
+    
+    return new Promise((resolve, reject)=>{
+        db.query(`DELETE FROM blacklist_token WHERE created_at < now() - INTERVAL '3 hours'`)
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
 module.exports = models

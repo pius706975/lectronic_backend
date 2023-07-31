@@ -58,21 +58,39 @@ controllers.Login = async (req, res)=>{
         
         const user = result[0]
         if (!user) {
-            return response(res, 401, {message: 'Email is incorrect'})
+            return response(res, 401, {message: 'Email or password is incorrect'})
         }
-
+        
         const comparedData = await bcrypt.compareSync(password, user.password)
         if (!comparedData) {
-            return response(res, 401, {message: 'Password is incorrect'})
+            return response(res, 401, {message: 'Email or password is incorrect'})
         } else if (user.is_verified === false) {
             return response(res, 401, {message: 'You need to verify your account'})
-        }
+        } 
 
         delete user.password
         const token = `Bearer ${jwt.sign(user, process.env.JWT_SECRET, {expiresIn: '1d'})}`
         const responseData = {token}
 
         return response(res, 200, responseData)
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error)
+    }
+}
+
+controllers.Logout = async (req, res)=>{
+
+    try {
+        const token = req.headers.authorization
+        if (!token) {
+            return response(res, 401, {message: 'you have looged out'})
+        }
+
+        const tokenToBlacklist = token.split(' ')[1]
+        await models.AddBlacklist({blacklist_token: tokenToBlacklist})
+
+        return response(res, 200, {message: 'You logged out'})
     } catch (error) {
         console.log(error)
         return response(res, 500, error)
@@ -152,6 +170,39 @@ controllers.ResendVerification = async (req, res)=>{
             user: result,
             message: 'Verification email is resent'
         })
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error)
+    }
+}
+
+controllers.RefreshToken = async (req, res)=>{
+
+    try {
+        const token = req.headers.token
+        if (!token) {
+            return response(res, 401, {message: 'Token is required'})
+        }
+
+        const refreshTokenCheck = await models.RefreshTokenCheck({refresh_token: token})
+        if (refreshTokenCheck <= 0) {
+            return response(res, 400, {message: 'Invalid refresh token'})
+        }
+
+        const user = refreshTokenCheck[0]
+        if (user.refresh_token !== token) {
+            return response(res, 400, {message: 'Invalid refresh token'})
+        }
+
+        delete user.password
+        delete user.refresh_token
+
+        const newTokenAccess = jwt.verify(token.split(' ')[1], process.env.REFRESH_TOKEN_SECRET)
+        const tokenAccess = `Bearer ${jwt.sign(user, process.env.JWT_SECRET, {expiresIn: '1d'})}`
+
+        const responseData = {tokenAccess}
+
+        return response(res, 200, responseData)
     } catch (error) {
         console.log(error)
         return response(res, 500, error)

@@ -1,11 +1,12 @@
 const response = require('../libs/responses')
 const jwt = require('jsonwebtoken')
 const middleware = {}
+const authModels = require('../modules/auth/auth.models')
 
-middleware.authentication = async (req, res, next)=>{
+middleware.Authentication = async (req, res, next)=>{
 
     try {
-        const authHeader = req.header.authorization
+        const authHeader = req.headers.authorization
         if (!authHeader) {
             return response(res, 400, {message: 'You need to login first'})
         }
@@ -13,6 +14,12 @@ middleware.authentication = async (req, res, next)=>{
         const token = authHeader.split(' ')[1]
         if (!token) {
             return response(res, 40, {message: 'Token is required'})
+        }
+
+        const blacklistTokenCheck = await authModels.BlacklistCheck({blacklist_token: token})
+        const autoRemove = await authModels.autoRemoveBlacklistToken()
+        if (blacklistTokenCheck.length > 0) {
+            return response(res, 401, {message: 'You need to re-login'})
         }
 
         const decoded = await jwt.verify(token, process.env.JWT_SECRET)
@@ -27,7 +34,7 @@ middleware.authentication = async (req, res, next)=>{
     }
 }
 
-middleware.isAdmin = async (req, res, next)=>{
+middleware.IsAdmin = async (req, res, next)=>{
 
     try {
         const user = req.userData
@@ -42,7 +49,7 @@ middleware.isAdmin = async (req, res, next)=>{
     }
 }
 
-middleware.isUser = async (req, res, next)=>{
+middleware.IsUser = async (req, res, next)=>{
 
     try {
         const user = req.userData

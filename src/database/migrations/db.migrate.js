@@ -134,6 +134,6 @@ module.exports = {
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS users`)
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS products`)
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS categories`)
-    // await queryInterface.sequelize.query(`DROP TABLE IF EXISTS blacklist_token`)
+    await queryInterface.sequelize.query(`DROP TABLE IF EXISTS blacklist_token`)
   }
 };
