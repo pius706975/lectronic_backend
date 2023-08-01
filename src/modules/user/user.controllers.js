@@ -12,26 +12,56 @@ controller.UpdateUser = async (req, res)=>{
                 return response(res, 500, err)
             }
 
-            const {name, email, address, phone_number, date_of_birth, gender} = req.body
-            await models.UpdateProfile({
-                name, 
-                email,
-                address,
-                phone_number,
-                date_of_birth,
-                gender
-            })
-
             const user = req.userData
-            const getProfile = await models.GetProfile({user_id: user.user_id})
+            const userProfile = await models.GetProfile({user_id: user.user_id})
 
-            return response(res, 200, {message: 'Profile updated', data: getProfile})
+            const queries = {
+                name: req.body.name ? req.body.name : 'user',
+                email: user.email, //email doesn't need to change to keep data secure
+                address: req.body.address ? req.body.address : user.address,
+                phone_number: req.body.phone_number ? req.body.phone_number : user.phone_number,
+                date_of_birth: req.body.date_of_birth ? req.body.date_of_birth : user.date_of_birth,
+                gender: req.body.gender ? req.body.gender : user.gender,
+            }
+
+            const updatedProfile = await models.UpdateProfile(queries)
+
+            return response(res, 200, {message: 'Profile updated', data: updatedProfile})
         })
     } catch (error) {
         console.log(error)
         return response(res, 500, error)
     }
 }
+
+// controller.UpdateUser = async (req, res)=>{
+
+//     try {
+//         upload(req, res, async (err)=>{
+//             if (err) {
+//                 return response(res, 500, err)
+//             }
+
+//             const {name, email, address, phone_number, date_of_birth, gender} = req.body
+//             await models.UpdateProfile({
+//                 name, 
+//                 email,
+//                 address,
+//                 phone_number,
+//                 date_of_birth,
+//                 gender
+//             })
+
+//             const user = req.userData
+//             const getProfile = await models.GetProfile({user_id: user.user_id})
+
+//             return response(res, 200, {message: 'Profile updated', data: getProfile})
+//         })
+//     } catch (error) {
+//         console.log(error)
+//         return response(res, 500, error)
+//     }
+// }
 
 controller.DeleteUser = async (req, res)=>{
 
