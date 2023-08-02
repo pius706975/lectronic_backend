@@ -54,35 +54,6 @@ controller.UpdateProfilePicture = async (req, res)=>{
     }
 }
 
-// controller.UpdateProfilePicture = async (req, res)=>{
-    
-//     try {
-//         cloudinary.uploader.upload(req.file.path, {folder: 'lectronic/userImages'}, async function (err, result) {
-//             if (err) {
-//                 console.log(err)
-//                 return response(res, 500, err.message)
-//             }
-
-//             try {
-//                 const email = req.userData.email
-//                 const image = result.secure_url
-//                 const updatedData = await models.UpdateProfilePicture({image, email})
-
-//                 return response(res, 200, {
-//                     message: 'Profile picture updated',
-//                     data: updatedData
-//                 })
-//             } catch (error) {
-//                 console.log(error)
-//                 return response(res, 500, error.message)
-//             }
-//         })
-//     } catch (error) {
-//         console.log(error)
-//         return response(res, 500, error.message)
-//     }
-// }
-
 controller.DeleteUser = async (req, res)=>{
 
     try {
