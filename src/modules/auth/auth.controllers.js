@@ -31,6 +31,7 @@ controllers.Register = async (req, res)=>{
             token_verify: token_verify,
             token_expire: expiredToken,
             is_verified: false,
+            image: req.body.image ? req.body.image : process.env.DEFAULT_PICTURE
         }
 
         const verificationLink = `${process.env.BASE_URL}/auth/verification?token=${token_verify}`

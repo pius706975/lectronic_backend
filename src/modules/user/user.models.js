@@ -13,6 +13,18 @@ models.UpdateProfile = ({name, email, address, phone_number, date_of_birth, gend
     })
 }
 
+models.UpdateProfilePicture = ({image, email})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`UPDATE users SET image = COALESCE($1, image) WHERE email = $2 RETURNING name, email, address, phone_number, date_of_birth, gender, image`, [image, email])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
 models.DeleteUser = ({user_id})=>{
 
     return new Promise((resolve, reject)=>{

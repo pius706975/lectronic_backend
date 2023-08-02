@@ -1,7 +1,7 @@
 const models = {}
 const db = require('../../database/db_config/db.config')
 
-models.Register = ({name, email, password, role, token_verify, token_expire, is_verified})=>{
+models.Register = ({name, email, password, role, token_verify, token_expire, is_verified, image})=>{
     
     return new Promise((resolve, reject)=>{
         
@@ -10,7 +10,7 @@ models.Register = ({name, email, password, role, token_verify, token_expire, is_
             if (res.rowCount > 0) {
                 reject(new Error('Email already exists'))
             } else {
-                db.query(`INSERT INTO users (name, email, password, role, token_verify, token_expire, is_verified) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`, [name, email, password, role, token_verify, token_expire, is_verified])
+                db.query(`INSERT INTO users (name, email, password, role, token_verify, token_expire, is_verified, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`, [name, email, password, role, token_verify, token_expire, is_verified, image])
                 .then((res)=>{
                     resolve(res.rows)
                 }).catch((err)=>{
