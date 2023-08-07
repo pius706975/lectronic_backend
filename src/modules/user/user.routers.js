@@ -8,8 +8,8 @@ const upload = require('../../middleware/upload /multer.middleware')
 userRouters.delete('/', middle.Authentication, ctrl.DeleteUser)
 
 userRouters.put('/profile-picture', middle.Authentication, upload.single('image'), ctrl.UpdateProfilePicture)
-
 userRouters.put('/edit-profile', middle.Authentication, ctrl.UpdateUser)
+userRouters.put('/password', middle.Authentication, ctrl.UpdatePassword)
 
 userRouters.get('/profile', middle.Authentication, ctrl.GetProfile)
 

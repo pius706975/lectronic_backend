@@ -25,6 +25,22 @@ models.UpdateProfilePicture = ({image, email})=>{
     })
 }
 
+models.UpdatePassword = ({password, email})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            UPDATE users 
+            SET password = COALESCE($1, password)
+            WHERE email = $2`, 
+            [password, email])
+            .then((res)=>{
+                resolve(res.rows)
+            }).catch((err)=>{
+                reject(err)
+            })
+    })
+}
+
 models.DeleteUser = ({user_id})=>{
 
     return new Promise((resolve, reject)=>{

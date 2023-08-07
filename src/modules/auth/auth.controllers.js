@@ -9,6 +9,20 @@ const validator = require('validator')
 
 controllers.Register = async (req, res)=>{
     try {
+        const isPasswordValid = (password)=>{
+            const lengthRegex = /.{8,}/
+            const uppercaseRegex = /[A-Z]/
+            const symbolRegex = /[\W_]/
+            const numberRegex = /\d/
+
+            const hasLength = lengthRegex.test(password)
+            const hasUppercase = uppercaseRegex.test(password)
+            const hasSymbol = symbolRegex.test(password)
+            const hasNumber = numberRegex.test(password)
+
+            return hasLength && hasUppercase && hasSymbol && hasNumber
+        }
+
         const saltRounds = 10
         const hashedPassword = await bcrypt.hashSync(req.body.password, saltRounds)
         const token_verify = await crypto.randomBytes(16).toString('hex')
@@ -17,6 +31,8 @@ controllers.Register = async (req, res)=>{
 
         if (!req.body.email || !req.body.password) {
             return response(res, 401, {message: 'Email or password cannot be empty'})
+        } else if (!isPasswordValid(req.body.password)) {
+            return response(res, 400, {message: 'Password must contain at least 8 characters, 1 uppercase letter, 1 symbol, and 1 number'})
         } else if (!validator.isEmail(req.body.email)) {
             return response(res, 400, {message: 'Invalid email'})
         } else if (emailExists.length > 0) {

@@ -3,8 +3,8 @@ const models = require('../user/user.models')
 const response = require('../../libs/responses')
 const multer = require('multer')
 const upload = multer().none()
-const cloudinary = require('../../middleware/upload /cloudinary')
 const UploadFile = require('../../middleware/upload /cloudinary')
+const bcrypt = require('bcrypt')
 
 controller.UpdateUser = async (req, res)=>{
 
@@ -48,6 +48,40 @@ controller.UpdateProfilePicture = async (req, res)=>{
             message: 'Profile picture updated',
             data: updatedData
         })
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
+controller.UpdatePassword = async (req, res)=>{
+    try {
+        const isValidPassword = (password)=>{
+            const lengthRegex = /.{8,}/
+            const uppercaseRegex = /[A-Z]/
+            const symbolRegex = /[\W_]/
+            const numberRegex = /\d/
+
+            const hasLength = lengthRegex.test(password)
+            const hasUppercase = uppercaseRegex.test(password)
+            const hasSymbol = symbolRegex.test(password)
+            const hasNumber = numberRegex.test(password)
+
+            return hasLength && hasUppercase && hasSymbol && hasNumber
+        }
+        
+        const saltRounds = 10
+        const hassedPassword = await bcrypt.hashSync(req.body.password, saltRounds)
+
+        if (!isValidPassword(req.body.password)) {
+            return response(res, 400, {message: 'Password must contain at least 8 characters, 1 uppercase letter, 1 symbol, and 1 number'})
+        }
+
+        const email = req.userData.email
+        await models.UpdatePassword({password: hassedPassword, email})
+
+        return response(res, 200, {message: 'Password updated'})
+        
     } catch (error) {
         console.log(error)
         return response(res, 500, error.message)
