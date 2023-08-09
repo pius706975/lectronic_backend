@@ -1,5 +1,5 @@
 # lectronic_backend
-##
+
 ## Application installation steps
 Clone this repository to get all of the source code.
 ```bash
