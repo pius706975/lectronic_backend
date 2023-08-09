@@ -47,4 +47,42 @@ controller.AddProduct = async (req, res)=>{
     }
 }
 
+controller.UpdateProduct = async (req, res)=>{
+    try {
+        formData(req, res, async (err)=>{
+            if (err) {
+                return response(res, 500, err)
+            }
+            
+            const user = req.userData
+            if (!user) {
+                return response(res, 401, {message: 'You need to login first'})
+            }
+
+            // const queries = {
+            //     product_id
+            // }
+        })
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
+controller.GetAllProduct = async (req, res)=>{
+    try {
+        const {page, limit} = req.query
+        const pagination = page ? parseInt(page) : 1
+        const limitation = limit ? parseInt(limit) : 5
+        const offset = pagination === 1 ? 0 : limitation * (pagination - 1)
+
+        const result = await models.GetAllProduct({limit: limitation, offset})
+
+        return response(res, 200, result)
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
 module.exports = controller

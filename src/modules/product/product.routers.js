@@ -6,4 +6,6 @@ const upload = require('../../middleware/upload/multer.middleware')
 
 productRouters.post('', middle.Authentication, middle.IsAdmin, ctrl.AddProduct)
 
+productRouters.get('', ctrl.GetAllProduct)
+
 module.exports = productRouters

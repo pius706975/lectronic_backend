@@ -27,6 +27,27 @@ models.AddProduct = ({category_id, name, price, stock, sold, image, rating, desc
     })
 }
 
+models.UpdateProduct = ({category_id, name, price, stock, description, product_id})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            UPDATE products 
+            SET category_id = COALESCE($1, category_id),
+                name = COALESCE($2, name),
+                price = COALESCE($3, price),
+                stock = COALESCE($4, stock),
+                description = COALESCE($5, description)
+            WHERE product_id = $2
+            RETURNING *`,
+            [category_id, name, price, stock, description, product_id])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
 models.ProductExists = ({name})=>{
 
     return new Promise((resolve, reject)=>{
@@ -34,6 +55,37 @@ models.ProductExists = ({name})=>{
             SELECT * FROM products
             WHERE name ILIKE $1`,
             [`%${name}%`])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.GetAllProduct = ({limit, offset})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            SELECT * FROM products
+            ORDER BY created_at DESC
+            LIMIT $1 OFFSET $2`, 
+            [limit, offset])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.GetProductByID = ({product_id})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            SELECT * FROM products
+            WHERE product_id = $1`,
+            [product_id])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{

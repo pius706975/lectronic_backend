@@ -1,5 +1,7 @@
-# lectronic_backend
+# lectronic_backend_NodeJS
+Lectronic is an e-commerce that provides electronic products such as headphone, audio speaker, etc.
 
+##
 ## Application installation steps
 Clone this repository to get all of the source code.
 ```bash
