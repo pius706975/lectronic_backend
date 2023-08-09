@@ -49,7 +49,7 @@ Example of environment variables.
 
 ##
 ## How to run this application?
-###Do database migration after creating data in postgreSQL.
+### Do database migration after creating data in postgreSQL.
 
 to create all tables
 ``` bash
