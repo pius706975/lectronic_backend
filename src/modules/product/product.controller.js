@@ -85,4 +85,19 @@ controller.GetAllProduct = async (req, res)=>{
     }
 }
 
+controller.GetProductByID = async (req, res)=>{
+    try {
+        const product_id = req.params.product_id
+        const result = await models.GetProductByID({product_id})
+        if (result.length <= 0) {
+            return response(res, 404, {message: 'Product not found'})
+        }
+
+        return response(res, 200, result)
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
 module.exports = controller
