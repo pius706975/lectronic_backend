@@ -30,7 +30,7 @@ controllers.Register = async (req, res)=>{
         const emailExists = await models.Login({email: req.body.email})
 
         if (!req.body.email || !req.body.password) {
-            return response(res, 401, {message: 'Email or password cannot be empty'})
+            return response(res, 400, {message: 'Email or password cannot be empty'})
         } else if (!isPasswordValid(req.body.password)) {
             return response(res, 400, {message: 'Password must contain at least 8 characters, 1 uppercase letter, 1 symbol, and 1 number'})
         } else if (!validator.isEmail(req.body.email)) {

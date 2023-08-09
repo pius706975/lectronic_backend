@@ -2,7 +2,7 @@ const express = require('express')
 const userRouters = express.Router()
 const ctrl = require('./user.controllers')
 const middle = require('../../middleware/middle.auth')
-const upload = require('../../middleware/upload /multer.middleware')
+const upload = require('../../middleware/upload/multer.middleware')
 
 
 userRouters.delete('/', middle.Authentication, ctrl.DeleteUser)

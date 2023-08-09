@@ -2,14 +2,14 @@ const controller = {}
 const models = require('../user/user.models')
 const response = require('../../libs/responses')
 const multer = require('multer')
-const upload = multer().none()
-const UploadFile = require('../../middleware/upload /cloudinary')
+const formData = multer().none()
+const UploadFile = require('../../middleware/upload/cloudinary')
 const bcrypt = require('bcrypt')
 
 controller.UpdateUser = async (req, res)=>{
 
     try {
-        upload(req, res, async (err)=>{
+        formData(req, res, async (err)=>{
             if (err) {
                 return response(res, 500, err)
             }

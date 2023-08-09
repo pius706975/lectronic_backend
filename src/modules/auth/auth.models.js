@@ -5,12 +5,19 @@ models.Register = ({name, email, password, role, token_verify, token_expire, is_
     
     return new Promise((resolve, reject)=>{
         
-        db.query(`SELECT * FROM users WHERE email ILIKE $1`, [`%${email}%`])
+        db.query(`
+            SELECT * FROM users 
+            WHERE email ILIKE $1`, 
+            [`%${email}%`])
         .then((res)=>{
             if (res.rowCount > 0) {
                 reject(new Error('Email already exists'))
             } else {
-                db.query(`INSERT INTO users (name, email, password, role, token_verify, token_expire, is_verified, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`, [name, email, password, role, token_verify, token_expire, is_verified, image])
+                db.query(`
+                    INSERT INTO users (name, email, password, role, token_verify, token_expire, is_verified, image) 
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+                    RETURNING *`, 
+                    [name, email, password, role, token_verify, token_expire, is_verified, image])
                 .then((res)=>{
                     resolve(res.rows)
                 }).catch((err)=>{
@@ -24,7 +31,10 @@ models.Register = ({name, email, password, role, token_verify, token_expire, is_
 models.Login = ({email})=>{
     
     return new Promise((resolve, reject)=>{
-        db.query(`SELECT * FROM users WHERE email = $1`, [email])
+        db.query(`
+            SELECT * FROM users 
+            WHERE email = $1`, 
+            [email])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
@@ -36,7 +46,10 @@ models.Login = ({email})=>{
 models.TokenVerify = ({token_verify})=>{
 
     return new Promise((resolve, reject)=>{
-        db.query(`SELECT * FROM users WHERE token_verify = $1`, [token_verify])
+        db.query(`
+            SELECT * FROM users 
+            WHERE token_verify = $1`, 
+            [token_verify])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
@@ -48,7 +61,11 @@ models.TokenVerify = ({token_verify})=>{
 models.VerifyEmail = ({is_verified, name})=>{
 
     return new Promise((resolve, reject)=>{
-        db.query(`UPDATE users SET is_verified = $1 WHERE name = $2 RETURNING email, name`, [is_verified, name])
+        db.query(`
+            UPDATE users SET is_verified = $1 
+            WHERE name = $2 
+            RETURNING email, name`, 
+            [is_verified, name])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
@@ -60,7 +77,12 @@ models.VerifyEmail = ({is_verified, name})=>{
 models.ResendVerification = ({token_verify, token_expire, email})=>{
 
     return new Promise((resolve, reject)=>{
-        db.query(`UPDATE users SET token_verify = $1, token_expire = $2 WHERE email = $3 RETURNING email, name, token_verify`, [token_verify, token_expire, email])
+        db.query(`
+            UPDATE users 
+            SET token_verify = $1, token_expire = $2 
+            WHERE email = $3 
+            RETURNING email, name, token_verify`, 
+            [token_verify, token_expire, email])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
@@ -72,7 +94,12 @@ models.ResendVerification = ({token_verify, token_expire, email})=>{
 models.RefreshToken = ({refresh_token, email})=>{
     
     return new Promise((resolve, reject)=>{
-        db.query(`UPDATE users SET refresh_token = $1 WHERE email = $2 RETURNING *`, [refresh_token, email])
+        db.query(`
+            UPDATE users 
+            SET refresh_token = $1 
+            WHERE email = $2 
+            RETURNING *`, 
+            [refresh_token, email])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
@@ -84,7 +111,10 @@ models.RefreshToken = ({refresh_token, email})=>{
 models.RefreshTokenCheck = ({refresh_token})=>{
     
     return new Promise((resolve, reject)=>{
-        db.query(`SELECT * FROM users WHERE refresh_token = $1`, [refresh_token])
+        db.query(`
+            SELECT * FROM users 
+            WHERE refresh_token = $1`, 
+            [refresh_token])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
@@ -96,7 +126,10 @@ models.RefreshTokenCheck = ({refresh_token})=>{
 models.AddBlacklist = ({blacklist_token})=>{
 
     return new Promise((resolve, reject)=>{
-        db.query(`INSERT INTO blacklist_token (blacklist_token) VALUES ($1)`, [blacklist_token])
+        db.query(`
+            INSERT INTO blacklist_token (blacklist_token) 
+            VALUES ($1)`, 
+            [blacklist_token])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
@@ -108,7 +141,10 @@ models.AddBlacklist = ({blacklist_token})=>{
 models.BlacklistCheck = ({blacklist_token})=>{
 
     return new Promise((resolve, reject)=>{
-        db.query(`SELECT * FROM blacklist_token WHERE blacklist_token = $1`, [blacklist_token])
+        db.query(`
+            SELECT * FROM blacklist_token 
+            WHERE blacklist_token = $1`, 
+            [blacklist_token])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
@@ -120,7 +156,9 @@ models.BlacklistCheck = ({blacklist_token})=>{
 models.autoRemoveBlacklistToken = ()=>{
     
     return new Promise((resolve, reject)=>{
-        db.query(`DELETE FROM blacklist_token WHERE created_at < now() - INTERVAL '3 hours'`)
+        db.query(`
+            DELETE FROM blacklist_token 
+            WHERE created_at < now() - INTERVAL '3 hours'`)
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
