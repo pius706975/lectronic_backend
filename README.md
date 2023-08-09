@@ -9,7 +9,7 @@ Clone this repository to get all of the source code.
   
   # or
 
-  git clone git@github.com:pius706975/lectronic_backend-ongoing-.git
+  git clone https://github.com/pius706975/lectronic_backend-ongoing-.git
 ```
 
 Make sure that you're already in main branch.
