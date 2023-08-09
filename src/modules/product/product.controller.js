@@ -59,10 +59,51 @@ controller.UpdateProduct = async (req, res)=>{
                 return response(res, 401, {message: 'You need to login first'})
             }
 
-            // const queries = {
-            //     product_id
-            // }
+            const queries = {
+                category_id: req.body.category_id,
+                name: req.body.name,
+                price: req.body.price,
+                stock: req.body.stock,
+                description: req.body.description,
+                product_id: req.params.product_id
+            }
+
+            const dataExists = await models.GetProductByID(queries)
+            const nameCheck = await models.ProductExists(queries)
+            if (dataExists.length <= 0) {
+                return response(res, 404, {message: 'Product not found'})
+            } else if (nameCheck.length >= 1) {
+                return response(res, 400, {message: 'Product already exists'})
+            }
+
+            const result = await models.UpdateProduct(queries)
+
+            return response(res, 200, result)
         })
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
+controller.UpdateProductPicture = async (req, res)=>{
+    try {
+        const user = req.userData
+        if (!user) {
+            return response(res, 401, {message: 'You need to login first'})
+        }
+
+        const upload = await uploadFile(req.file.path, 'lectronic/productImages')
+        const product_id = req.params.product_id
+        const image = upload.secure_url
+        const dataExists = await models.GetProductByID({product_id})
+        if (dataExists.length <= 0) {
+            return response(res, 404, {message: 'Product not found'})
+        }
+
+        const result = await models.UpdateProductPicture({image, product_id})
+
+        return response(res, 200, result)
     } catch (error) {
         console.log(error)
         return response(res, 500, error.message)

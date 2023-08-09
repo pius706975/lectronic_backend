@@ -37,9 +37,26 @@ models.UpdateProduct = ({category_id, name, price, stock, description, product_i
                 price = COALESCE($3, price),
                 stock = COALESCE($4, stock),
                 description = COALESCE($5, description)
-            WHERE product_id = $2
+            WHERE product_id = $6
             RETURNING *`,
             [category_id, name, price, stock, description, product_id])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.UpdateProductPicture = ({image, product_id})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            UPDATE products
+            SET image = COALESCE($1, image)
+            WHERE product_id = $2
+            RETURNING *`,
+            [image, product_id])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{

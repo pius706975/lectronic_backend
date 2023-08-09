@@ -26,25 +26,27 @@ Example of environment variables.
 ``` bash
   APP_PORT=8080   
   BASE_URL=http://localhost:8080
-  
-  JWT_SECRET=it's up to you what jwt_secret you want to use. e.g you can use "thisissecrect".
-  REFRESH_TOKEN_SECRET=same as jwt_secret
+
+  # it's up to you what jwt_secret or refresh_token_refresh you want to use. e.g you can use "thisissecrect".
+  JWT_SECRET=thisissecrect
+  REFRESH_TOKEN_SECRET=thisissecrect
   
   DB_HOST=localhost
   DB_NAME=databasename
   DB_USER=xxxxx
   DB_PASSWORD=xxxx
-  DB_PORT=databaseport
+  DB_PORT=database_port
   
-  MAIL_USER=you can use your own email
-  MAIL_PASS=fill this variable with your email application password. it's provided if you use gmail.
+  # you can use your own gmail as mail user and get the application password from gmail to fill mail_pass. 
+  MAIL_USER=
+  MAIL_PASS=
 
-  You need to create cloudinary account first to get name, api_key, and api_secret
+  # You need to create cloudinary account first to get name, api_key, and api_secret
   CLOUDINARY_NAME=
   CLOUDINARY_KEY=
   CLOUDINARY_SECRET=
 
-  You can upload default picture in cloudinary first and get the link that will be used as default picture.
+  # You can upload default picture in cloudinary first and get the link that will be used as default user picture and default product picture.
   DEFAULT_PICTURE=
   DEFAULT_PRODPIC=
 ```
