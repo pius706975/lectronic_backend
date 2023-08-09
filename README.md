@@ -20,7 +20,7 @@ Install npm dependencies in the main folder that contains package.json so that n
   npm install
 ```
 
-### example of environment variables.
+Example of environment variables.
 ``` bash
   APP_PORT=8080   
   BASE_URL=http://localhost:8080
@@ -49,7 +49,7 @@ Install npm dependencies in the main folder that contains package.json so that n
 
 ##
 ## How to run this application?
-Do database migration after creating data in postgreSQL.
+###Do database migration after creating data in postgreSQL.
 
 to create all tables
 ``` bash
