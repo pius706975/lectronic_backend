@@ -6,9 +6,9 @@ Lectronic is an e-commerce that provides electronic products such as headphone, 
 Clone this repository to get all of the source code.
 ```bash
   git clone git@github.com:pius706975/lectronic_backend-ongoing-.git
-```
-or
-```bash
+  
+  # or
+
   git clone git@github.com:pius706975/lectronic_backend-ongoing-.git
 ```
 
@@ -17,7 +17,7 @@ Make sure that you're already in main branch.
   git checkout main
 ```
 
-Install npm dependencies in the main folder that contains package.json so that npm will be initiated and all of the dependencies will be installed
+Install npm dependencies in the main folder that contains package.json so that npm will be initiated and all of the dependencies will be installed.
 ``` bash
   npm install
 ```
@@ -51,22 +51,20 @@ Example of environment variables.
 
 ##
 ## How to run this application?
-### Do database migration after creating data in postgreSQL.
-
-to create all tables
+Do database migration after creating data in postgreSQL.
 ``` bash
+  # to create all tables
   npm run migrate:up
-```
-to drop all tables
-``` bash
+
+  # to drop all tables
   npm run migrate:down
 ```
 
 Start the server
 ``` bash
   npm start
-```
-or
-``` bash
+  
+  # or
+
   npm run dev
 ```

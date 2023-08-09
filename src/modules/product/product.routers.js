@@ -7,6 +7,8 @@ const upload = require('../../middleware/upload/multer.middleware')
 productRouters.post('', middle.Authentication, middle.IsAdmin, ctrl.AddProduct)
 
 productRouters.get('', ctrl.GetAllProduct)
-productRouters.get('/:product_id', ctrl.GetProductByID)
+productRouters.get('/id=:product_id', ctrl.GetProductByID)
+productRouters.get('/category', ctrl.GetProductByCategory)
+productRouters.get('/name', ctrl.GetProductByName)
 
 module.exports = productRouters

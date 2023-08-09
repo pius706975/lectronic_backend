@@ -94,4 +94,39 @@ models.GetProductByID = ({product_id})=>{
     })
 }
 
+models.GetProductByCategory = ({category_name, limit, offset})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            SELECT p.* from products p
+            INNER JOIN categories c ON p.category_id = c.category_id
+            WHERE c.category_name ILIKE $1
+            ORDER BY created_at DESC
+            LIMIT $2 OFFSET $3`,
+            [`%${category_name}%`, limit, offset])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.GetProductByName = ({name, limit, offset})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            SELECT * FROM products
+            WHERE name ILIKE $1
+            ORDER BY created_at DESC
+            LIMIT $2 OFFSET $3`,
+            [`%${name}%`, limit, offset])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
 module.exports = models

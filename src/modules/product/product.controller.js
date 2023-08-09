@@ -100,4 +100,42 @@ controller.GetProductByID = async (req, res)=>{
     }
 }
 
+controller.GetProductByCategory = async (req, res)=>{
+    try {
+        const {page, limit} = req.query
+        const pagination = page ? parseInt(page) : 1
+        const limitation = limit ? parseInt(limit) : 5
+        const offset = pagination === 1 ? 0 : limitation * (pagination - 1)
+        const category_name = req.query.category_name
+        const result = await models.GetProductByCategory({category_name: category_name, limit: limitation, offset})
+        if (result.length <= 0) {
+            return response(res, 404, {message: 'Product not found'})
+        }
+
+        return response(res, 200, result)
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
+controller.GetProductByName = async (req, res)=>{
+    try {
+        const {page, limit} = req.query
+        const pagination = page ? parseInt(page) : 1
+        const limitation = limit ? parseInt(limit) : 5
+        const offset = pagination === 1 ? 0 : limitation * (pagination - 1)
+        const name = req.query.name
+        const result = await models.GetProductByName({name: name, limit: limitation, offset})
+        if (result.length <= 0) {
+            return response(res, 404, {message: 'Product not found'})
+        }
+
+        return response(res, 200, result)
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
 module.exports = controller
