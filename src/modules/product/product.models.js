@@ -27,6 +27,21 @@ models.AddProduct = ({category_id, name, price, stock, sold, image, rating, desc
     })
 }
 
+models.DeleteProduct = ({product_id})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            DELETE FROM products
+            WHERE product_id = $1`,
+            [product_id])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
 models.UpdateProduct = ({category_id, name, price, stock, description, product_id})=>{
 
     return new Promise((resolve, reject)=>{

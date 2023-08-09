@@ -47,6 +47,28 @@ controller.AddProduct = async (req, res)=>{
     }
 }
 
+controller.DeleteProduct = async (req, res)=>{
+    try {
+        const user = req.userData
+        if (!user) {
+            return response(res, 401, {message: 'You need to login first'})
+        }
+
+        const product_id = req.params.product_id
+        const dataExists = await models.GetProductByID({product_id})
+        if (dataExists.length <= 0) {
+            return response(res, 404, {message: 'Product not found'})
+        }
+
+        await models.DeleteProduct({product_id})
+
+        return response(res, 200, {message: 'Product has been deleted'})
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
 controller.UpdateProduct = async (req, res)=>{
     try {
         formData(req, res, async (err)=>{

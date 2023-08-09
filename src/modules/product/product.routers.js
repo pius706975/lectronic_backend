@@ -6,8 +6,10 @@ const upload = require('../../middleware/upload/multer.middleware')
 
 productRouters.post('', middle.Authentication, middle.IsAdmin, ctrl.AddProduct)
 
+productRouters.delete('/:product_id', middle.Authentication, middle.IsAdmin, ctrl.DeleteProduct)
+
 productRouters.put('/edit/:product_id', middle.Authentication, middle.IsAdmin, ctrl.UpdateProduct)
-productRouters.put('/edit-pic/:product_id', middle.Authentication, upload.single('image'), middle.IsAdmin, ctrl.UpdateProductPicture)
+productRouters.put('/edit-pic/:product_id', middle.Authentication, middle.IsAdmin, upload.single('image'), ctrl.UpdateProductPicture)
 
 productRouters.get('', ctrl.GetAllProduct)
 productRouters.get('/id=:product_id', ctrl.GetProductByID)
