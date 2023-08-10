@@ -62,6 +62,11 @@ Do database migration after creating data in postgreSQL.
   npm run migrate:down
 ```
 
+Database seeds are provided. Use seeds if you don't want to create new data
+``` bash
+  npm run seed:up
+```
+
 Start the server
 ``` bash
   npm start
