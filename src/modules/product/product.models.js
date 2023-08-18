@@ -10,7 +10,7 @@ models.AddProduct = ({category_id, name, price, stock, sold, image, rating, desc
             [`%${name}%`])
         .then((res)=>{
             if (res.rowCount > 0) {
-                reject(new Error('Email already exists'))
+                reject(new Error('Product already exists'))
             } else {
                 db.query(`
                     INSERT INTO products (category_id, name, price, stock, sold, image, rating, description)
@@ -153,6 +153,35 @@ models.GetProductByName = ({name, limit, offset})=>{
             ORDER BY created_at DESC
             LIMIT $2 OFFSET $3`,
             [`%${name}%`, limit, offset])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.GetTotalProducts = ()=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            SELECT COUNT(*) FROM products`)
+        .then((res)=>{
+            resolve(res.rows[0].count)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.GetTotalProductCategories = ()=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            SELECT c.category_name, COUNT(p.product_id) AS total_products
+            FROM categories c
+            LEFT JOIN products p ON c.category_id = p.category_id
+            GROUP BY c.category_name`)
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{

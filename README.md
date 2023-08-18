@@ -53,7 +53,36 @@ Example of environment variables.
 
 ##
 ## How to run this application?
-Do database migration after creating data in postgreSQL.
+Before execute database migration and seeds, check "config.json" in "src/database/config/config.json".
+``` bash
+  # You need to re-configure according your db configuration values
+  {
+    "development": {
+      "username": "",
+      "password": "",
+      "database": "",
+      "host": "",
+      "dialect": ""
+    },
+    "test": {
+      "username": "",
+      "password": "",
+      "database": "",
+      "host": "",
+      "dialect": ""
+    },
+    "production": {
+      "username": "",
+      "password": "",
+      "database": "",
+      "host": "",
+      "dialect": ""
+    }
+  }
+
+``` 
+
+If re-configure "config.json" is done, do database migration after creating data in postgreSQL.
 ``` bash
   # to create all tables
   npm run migrate:up

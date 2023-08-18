@@ -132,16 +132,23 @@ controller.UpdateProductPicture = async (req, res)=>{
     }
 }
 
-controller.GetAllProduct = async (req, res)=>{
+controller.GetAllProducts = async (req, res)=>{
     try {
         const {page, limit} = req.query
         const pagination = page ? parseInt(page) : 1
         const limitation = limit ? parseInt(limit) : 5
         const offset = pagination === 1 ? 0 : limitation * (pagination - 1)
+        const totalProducts = await models.GetTotalProducts()
 
         const result = await models.GetAllProduct({limit: limitation, offset})
 
-        return response(res, 200, result)
+        const totalPages = Math.ceil(totalProducts / limitation)
+
+        return response(res, 200, {
+            result: result,
+            totalRows: totalProducts,
+            totalPages: totalPages
+        })
     } catch (error) {
         console.log(error)
         return response(res, 500, error.message)
@@ -170,12 +177,25 @@ controller.GetProductByCategory = async (req, res)=>{
         const limitation = limit ? parseInt(limit) : 5
         const offset = pagination === 1 ? 0 : limitation * (pagination - 1)
         const category_name = req.query.category_name
+        const totalProductPerCategory = await models.GetTotalProductCategories()
+        const categoryTotal = totalProductPerCategory.find(cat => cat.category_name.toLowerCase() === category_name.toLowerCase())
+        if (!categoryTotal) {
+            return response(res, 404, {message: 'Product not found'})
+        }
+
+        const totalProducts = categoryTotal.total_products
+        const totalPages = Math.ceil(totalProducts / limitation)
+        
         const result = await models.GetProductByCategory({category_name: category_name, limit: limitation, offset})
         if (result.length <= 0) {
             return response(res, 404, {message: 'Product not found'})
         }
 
-        return response(res, 200, result)
+        return response(res, 200, {
+            result: result,
+            totalRows: totalProducts,
+            totalPages: totalPages
+        })
     } catch (error) {
         console.log(error)
         return response(res, 500, error.message)

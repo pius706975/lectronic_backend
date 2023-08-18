@@ -11,7 +11,7 @@ productRouters.delete('/:product_id', middle.Authentication, middle.IsAdmin, ctr
 productRouters.put('/edit/:product_id', middle.Authentication, middle.IsAdmin, ctrl.UpdateProduct)
 productRouters.put('/edit-pic/:product_id', middle.Authentication, middle.IsAdmin, upload.single('image'), ctrl.UpdateProductPicture)
 
-productRouters.get('', ctrl.GetAllProduct)
+productRouters.get('', ctrl.GetAllProducts)
 productRouters.get('/id=:product_id', ctrl.GetProductByID)
 productRouters.get('/category', ctrl.GetProductByCategory)
 productRouters.get('/name', ctrl.GetProductByName)
