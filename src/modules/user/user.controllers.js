@@ -19,7 +19,7 @@ controller.UpdateUser = async (req, res)=>{
 
             const queries = {
                 name: req.body.name ? req.body.name : 'user',
-                email: user.email, //email doesn't need to change to keep data secure
+                email: user.email, //email doesn't need to be changed to keep data secure
                 address: req.body.address ? req.body.address : user.address,
                 phone_number: req.body.phone_number ? req.body.phone_number : user.phone_number,
                 date_of_birth: req.body.date_of_birth ? req.body.date_of_birth : user.date_of_birth,

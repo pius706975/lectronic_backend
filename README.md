@@ -3,20 +3,6 @@ Lectronic is an e-commerce that provides electronic products such as headphone, 
 
 ##
 ## Application installation steps
-Clone this repository to get all of the source code.
-```bash
-  git clone git@github.com:pius706975/lectronic_backend-ongoing-.git
-  
-  # or
-
-  git clone https://github.com/pius706975/lectronic_backend-ongoing-.git
-```
-
-Make sure that you're already in main branch.
-``` bash
-  git checkout main
-```
-
 Install npm dependencies in the main folder that contains package.json so that npm will be initiated and all of the dependencies will be installed.
 ``` bash
   npm install

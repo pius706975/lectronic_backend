@@ -6,8 +6,6 @@ const jwt = require('jsonwebtoken')
 const sendEmail = require('../../libs/node.mailer')
 const crypto = require('crypto')
 const validator = require('validator')
-const multer = require('multer')
-const formData = multer().none()
 
 controllers.Register = async (req, res)=>{
     try {
@@ -56,6 +54,7 @@ controllers.Register = async (req, res)=>{
         const verificationLink = `${process.env.BASE_URL}/auth/verification?token=${token_verify}`
         const resendVerificationLink = `${process.env.BASE_URL}/auth/resend?email=${queries.email}`
         
+        await sendEmail(queries.email, 'Email verification\n', verificationLink) 
         
         const result = await models.Register(queries)
 
@@ -176,7 +175,6 @@ controllers.ResendVerification = async (req, res)=>{
             token_verify: token_verify,
             token_expire: expiredAt,
             email: req.query.email
-
         }
 
         const verificationLink = `${process.env.BASE_URL}/auth/verification?token=${token_verify}`
