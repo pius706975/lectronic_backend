@@ -34,7 +34,7 @@ Example of environment variables.
 
   # You can upload default picture in cloudinary first and get the link that will be used as default user picture and default product picture.
   DEFAULT_PICTURE=
-  DEFAULT_PRODPIC=
+  DEFAULT_PRODPIC= 
 ```
 
 ##
