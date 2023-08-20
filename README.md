@@ -1,4 +1,4 @@
-# lectronic_backend_NodeJS
+# Lectronic Node.js (Back-end)
 Lectronic is an e-commerce that provides electronic products such as headphone, audio speaker, etc.
 
 ##
