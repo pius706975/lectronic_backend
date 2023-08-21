@@ -54,11 +54,53 @@ controller.AddToCart = async (req, res)=>{
     }
 }
 
+controller.DeleteItem = async (req, res)=>{
+    try {
+        const user = req.userData
+        if (!user) {
+            return response(res, 401, {message: 'You need to login first'})
+        }
+
+        const cart_id = req.params.cart_id
+        const dataExists = await models.GetItemByID({cart_id})
+        if (dataExists.length <= 0) {
+            return response(res, 404, {message: 'Item not found'})
+        }
+
+        await models.DeleteItem({cart_id})
+
+        return response(res, 200, {message: 'Item has been deleted'})
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
 controller.GetAllItems = async (req, res)=>{
     try {
         const result = await models.GetAllItems()
         if (result.length <= 0) {
             return response(res, 404, {message: `You haven't added any products yet`})
+        }
+
+        return response(res, 200, result)
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
+controller.GetItemByID = async (req, res)=>{
+    try {
+        const user = req.userData
+        if (!user) {
+            return response(res, 401, {message: 'You need to login first'})
+        }
+
+        const cart_id = req.params.cart_id
+        const result = await models.GetItemByID({cart_id})
+        if (result.length <= 0) {
+            return response(res, 404, {message: 'Item not found'})
         }
 
         return response(res, 200, result)

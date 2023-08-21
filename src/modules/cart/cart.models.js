@@ -17,14 +17,13 @@ models.AddToCart = ({user_id, product_id, qty, item_prices, discount, total, sta
     });
 }
 
-models.GetItemPrice = ({product_id})=>{
+models.DeleteItem = ({cart_id})=>{
 
     return new Promise((resolve, reject)=>{
         db.query(`
-            SELECT p.product_id, p.price FROM products p
-            LEFT JOIN cart c ON p.product_id = c.product_id 
-            WHERE p.product_id = $1`,
-            [product_id])
+            DELETE FROM cart 
+            WHERE cart_id = $1`,
+            [cart_id])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
@@ -47,13 +46,29 @@ models.GetAllItems = ()=>{
     })
 }
 
-models.DeleteItem = ({cart_id})=>{
+models.GetItemByID = ({cart_id})=>{
 
     return new Promise((resolve, reject)=>{
         db.query(`
-            DELETE FROM cart 
+            SELECT * FROM cart
             WHERE cart_id = $1`,
             [cart_id])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.GetItemPrice = ({product_id})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            SELECT p.product_id, p.price FROM products p
+            LEFT JOIN cart c ON p.product_id = c.product_id 
+            WHERE p.product_id = $1`,
+            [product_id])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
