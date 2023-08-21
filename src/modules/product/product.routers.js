@@ -15,5 +15,6 @@ productRouters.get('', ctrl.GetAllProducts)
 productRouters.get('/id=:product_id', ctrl.GetProductByID)
 productRouters.get('/category', ctrl.GetProductByCategory)
 productRouters.get('/name', ctrl.GetProductByName)
+productRouters.get('/stock=:product_id', ctrl.GetProductStock)
 
 module.exports = productRouters

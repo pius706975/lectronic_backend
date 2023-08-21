@@ -1,16 +1,16 @@
-const Controller = {}
+const controller = {}
 const models = require('./category.models')
 const response = require('../../../libs/responses')
 const multer = require('multer')
 const formData = multer().none()
 
-Controller.AddCategory = async (req, res)=>{
+controller.AddCategory = async (req, res)=>{
     try {
         formData(req, res, async (err)=>{
             if (err) {
                 return response(res, 500, err)
             }
-
+ 
             const user = req.userData
             if (!user) {
                 return response(res, 401, {message: 'You need to login first'})
@@ -37,7 +37,7 @@ Controller.AddCategory = async (req, res)=>{
     }
 }
 
-Controller.UpdateCategory = async (req, res)=>{
+controller.UpdateCategory = async (req, res)=>{
     try {
         formData(req, res, async (err)=>{
             if (err) {
@@ -74,7 +74,7 @@ Controller.UpdateCategory = async (req, res)=>{
     }
 }
 
-Controller.DeleteCategory = async (req, res)=>{
+controller.DeleteCategory = async (req, res)=>{
     try {
         const user = req.userData
         if (!user) {
@@ -97,7 +97,7 @@ Controller.DeleteCategory = async (req, res)=>{
     }
 }
 
-Controller.GetAllCategories = async (req, res)=>{
+controller.GetAllCategories = async (req, res)=>{
     try {
         const user = req.userData
         if (!user) {
@@ -116,7 +116,7 @@ Controller.GetAllCategories = async (req, res)=>{
     }
 }
 
-Controller.GetCategoryByName = async (req, res)=>{
+controller.GetCategoryByName = async (req, res)=>{
     try {
         const user = req.userData
         if (!user) {
@@ -137,7 +137,7 @@ Controller.GetCategoryByName = async (req, res)=>{
     }
 }
 
-Controller.GetCategoryByID = async (req, res)=>{
+controller.GetCategoryByID = async (req, res)=>{
     try {
         const user = req.userData
         if (!user) {
@@ -157,4 +157,4 @@ Controller.GetCategoryByID = async (req, res)=>{
     }
 }
 
-module.exports = Controller
+module.exports = controller

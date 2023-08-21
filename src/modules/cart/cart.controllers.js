@@ -1,11 +1,12 @@
-const controllers = {}
+const controller = {}
 const response = require('../../libs/responses')
 const multer = require('multer')
 const models = require('./cart.models')
+const stock = require('../product/product.models')
 const formData = multer().none()
-const discount = require('../../libs/getDiscount')
+const discount = require('../../libs/get.discount')
 
-controllers.AddToCart = async (req, res)=>{
+controller.AddToCart = async (req, res)=>{
     try {
         formData(req, res, async (err)=>{
             if (err) {
@@ -19,9 +20,14 @@ controllers.AddToCart = async (req, res)=>{
 
             const product_id = req.body.product_id
             const qty = parseInt(req.body.qty, 10)
+            const getStock = await stock.GetProductStock({product_id})
+            const availableStock = getStock[0].stock
             const priceData = await models.GetItemPrice({product_id: product_id})
+            
             if (!priceData || priceData.length === 0) {
                 return response(res, 400, {message: 'Product cannot be counted'})
+            } else if (qty > availableStock) {
+                return response(res, 400, {message: 'Out of stock'})
             }
 
             const price = parseInt(priceData[0].price)
@@ -43,8 +49,23 @@ controllers.AddToCart = async (req, res)=>{
             return response(res, 200, result)
         })
     } catch (error) {
+        console.log(error)
         return response(res, 500, error.message)
     }
 }
 
-module.exports = controllers
+controller.GetAllItems = async (req, res)=>{
+    try {
+        const result = await models.GetAllItems()
+        if (result.length <= 0) {
+            return response(res, 404, {message: `You haven't added any products yet`})
+        }
+
+        return response(res, 200, result)
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
+module.exports = controller

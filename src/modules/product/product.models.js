@@ -161,6 +161,21 @@ models.GetProductByName = ({name, limit, offset})=>{
     })
 }
 
+models.GetProductStock = ({product_id})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            SELECT stock FROM products
+            WHERE product_id = $1`,
+            [product_id])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
 models.GetTotalProducts = ()=>{
 
     return new Promise((resolve, reject)=>{

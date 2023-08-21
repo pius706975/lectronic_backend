@@ -221,4 +221,20 @@ controller.GetProductByName = async (req, res)=>{
     }
 }
 
+controller.GetProductStock = async (req, res)=>{
+    try {
+        const product_id = req.params.product_id
+        const result = await models.GetProductStock({product_id})
+        const stock = result[0].stock
+        if (stock === 0) {
+            return response(res, 404, {message: 'Out of stock'})
+        }
+
+        return response(res, 200, result)
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
 module.exports = controller
