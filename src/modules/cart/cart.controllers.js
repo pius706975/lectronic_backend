@@ -97,12 +97,18 @@ controller.UpdateItem = async (req, res)=>{
             const dataExists = await models.GetItemByID(queries)
             if (dataExists.length <= 0) {
                 return response(res, 404, {message: 'Item not found'})
-            }
+            } 
 
             const priceData = await models.GetItemPrice({product_id: dataExists[0].product_id})
             const price = parseInt(priceData[0].price)
             const getItemPrices = price * qty
             const {discountedPrice, appliedDiscount} = discount(getItemPrices)
+
+            const availableStock = await stock.GetProductStock({product_id: dataExists[0].product_id})
+
+            if (qty > availableStock[0].stock) {
+                return response(res, 400, {message: 'Out of stock'})
+            }
 
             const updateData = {
                 qty: qty,
