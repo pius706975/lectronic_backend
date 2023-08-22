@@ -76,6 +76,52 @@ controller.DeleteItem = async (req, res)=>{
     }
 }
 
+controller.UpdateItem = async (req, res)=>{
+    try {
+        formData(req, res, async (err)=>{
+            if (err) {
+                return response(res, 500, err)
+            }
+
+            const user = req.userData
+            if (!user) {
+                return response(res, 401, {message: 'You need to login first'})
+            }
+
+            const qty = parseInt(req.body.qty, 10)
+            const queries = {
+                qty: qty,
+                cart_id: req.params.cart_id
+            }
+
+            const dataExists = await models.GetItemByID(queries)
+            if (dataExists.length <= 0) {
+                return response(res, 404, {message: 'Item not found'})
+            }
+
+            const priceData = await models.GetItemPrice({product_id: dataExists[0].product_id})
+            const price = parseInt(priceData[0].price)
+            const getItemPrices = price * qty
+            const {discountedPrice, appliedDiscount} = discount(getItemPrices)
+
+            const updateData = {
+                qty: qty,
+                item_prices: getItemPrices,
+                discount: appliedDiscount,
+                total: discountedPrice,
+                cart_id: req.params.cart_id
+            }
+
+            const result = await models.UpdateItem(updateData)
+
+            return response(res, 200, result)
+        })
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
 controller.GetAllItems = async (req, res)=>{
     try {
         const result = await models.GetAllItems()

@@ -32,6 +32,26 @@ models.DeleteItem = ({cart_id})=>{
     })
 }
 
+models.UpdateItem = ({qty, item_prices, discount, total, cart_id})=>{
+
+    return new Promise((resolve, rejects)=>{
+        db.query(`
+            UPDATE cart
+            SET qty = COALESCE($1, qty),
+                item_prices = COALESCE($2, item_prices), 
+                discount = COALESCE($3, discount), 
+                total = COALESCE($4, total)
+            WHERE cart_id = $5
+            RETURNING *`,
+            [qty, item_prices, discount, total, cart_id])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
 models.GetAllItems = ()=>{
 
     return new Promise((resolve, reject)=>{
