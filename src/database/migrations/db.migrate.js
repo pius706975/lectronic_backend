@@ -97,7 +97,7 @@ module.exports = {
     `)
 
     await queryInterface.sequelize.query(`
-      CREATE TABLE IF NOT EXISTS payment (
+      CREATE TABLE IF NOT EXISTS checkout (
         payment_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         product_id UUID,
         cart_id UUID,
