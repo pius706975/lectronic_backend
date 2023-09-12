@@ -129,7 +129,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.sequelize.query(`DROP TABLE IF EXISTS payment`)
+    await queryInterface.sequelize.query(`DROP TABLE IF EXISTS checkout`)
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS cart`)
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS reviews`)
     await queryInterface.sequelize.query(`DROP TABLE IF EXISTS users`)
