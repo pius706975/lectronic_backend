@@ -6,10 +6,18 @@ const router = require('./src/router/routers')
 const db = require('./src/database/db_config/db.config')
 const port = process.env.APP_PORT
 
+const corsOptions = {
+    origin: 'http://localhost:3000', //react js app
+    optionsSuccessStatus: 200
+}
+
+
+appServer.use(cors(corsOptions));
+appServer.options('*', cors(corsOptions))
+
 appServer.use(express.json())
 appServer.use(express.urlencoded({extended: true}))
 appServer.use(router)
-appServer.use(cors())
 
 appServer.all('*', (req, res, next)=>{
     response(res, 404, 'Sorry! Page not found')
