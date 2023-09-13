@@ -30,27 +30,27 @@ module.exports = {
 
     await queryInterface.bulkInsert('categories', [{
       category_id: '7b075e45-a0c1-49bb-907f-8134478dc1bd',
-      category_name: 'Headphone'
+      category_name: 'Headphones'
     }, 
     
     {
       category_id: 'ab278db8-e0c4-4e28-9007-6029e3693a03',
-      category_name: 'Additional Equipment'
+      category_name: 'Accessories'
     }, 
     
     {
       category_id: '1d42f0f0-3e9e-4604-b47c-969b203b7d18',
-      category_name: 'Audio Mixer'
+      category_name: 'Audio Mixers'
     }, 
     
     {
       category_id: 'f3cfb5d7-b8b1-4464-b24e-50db853aa142',
-      category_name: 'Audio Interface'
+      category_name: 'Audio Interfaces'
     }, 
     
     {
       category_id: '473732ff-0bc6-4f06-9964-4e030f81a194',
-      category_name: 'Speaker'
+      category_name: 'Loudspeakers'
     }], {})
 
     await queryInterface.bulkInsert('products', [{
@@ -635,6 +635,135 @@ module.exports = {
       image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694535581/lectronic/productImages/Image_BE_P0A8O_PMP6000_Top_XL_aucfbo.png',
       rating: 5,
       description: `The amazing PMP6000 Powered Mixer packs tremendous power (2 x 800 Watts stereo or 1,600 Watts in Bridged mode), while maintaining an incredible power-to-weight ratio. These mixers employ high-efficiency Class-D technology and a state-of-the-art switch-mode power supply, which significantly reduces weight and heat. The 20-channel PMP6000 features 12 built-in, studio-grade XENYX mic preamps, 4 stereo channels, dual 24-bit Multi-FX processors with 100 awesome presets including studio-class reverbs, delays, pitch shifter and various multi-effects, plus a 7-band stereo graphic EQ with our proprietary FBQ Feedback Detection System – for the ultimate in feedback free performance.`
+    },
+    
+    {
+      category_id: '473732ff-0bc6-4f06-9964-4e030f81a194',
+      name: 'Behringer B1800XP Passive Subwoofer',
+      price: 13000000,
+      stock: 98,
+      sold: 2,
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694569879/lectronic/productImages/B1800XP_P0BP2_Left_XL_pgu59h.png',
+      rating: 4,
+      description: `Our Eurolive B1800XP 3,000-Watt active subwoofer provides the ultimate in low-frequency reproduction, and the built-in stereo crossover makes it ideally suited for use with any of our active 2-way loudspeakers. Packed with a powerful 3,000-Watt Class-D amplifier, a TURBOSOUND 18" long-excursion Low-Frequency (LF) transducer and an incredible array of professional features, the B1800XP produces extreme levels of low-end punch, with the definition and clarity typically reserved for much larger systems!` 
+    },
+    
+    {
+      category_id: '473732ff-0bc6-4f06-9964-4e030f81a194',
+      name: 'Behringer B1500XP Passive Subwoofer',
+      price: '11335000',
+      stock: 99,
+      sold: 1,
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694570024/lectronic/productImages/B1500XP_P0BP1_Right_XL_ccokse.png',
+      rating: 4,
+      description: `Our Eurolive B1500XP 3000-Watt active subwoofer provides the ultimate in low-frequency reproduction, and the built-in stereo crossover makes it ideally suited for use with any of our active 2-way loudspeakers. Loaded with an all-new 3000-Watt Class-D amplifier, Turbosound 15" long-excursion Low-Frequency (LF) transducer and an incredible array of professional features, the B1500XP produces extreme levels of low-end punch, with the definition and clarity typically reserved for much larger systems. Packaged in a completely redesigned and lightweight enclosure, the B1500XP is our most robust and articulate subwoofer design ever! ` 
+    },
+    
+    {
+      category_id: '473732ff-0bc6-4f06-9964-4e030f81a194',
+      name: 'Behringer B215XL Passive Speaker',
+      price: 3200000,
+      stock: 97,
+      sold: 3,
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694570745/lectronic/productImages/B215XL_P0A0T_Right_XL_wczxxm.png',
+      rating: 3,
+      description: `` 
+    },
+    
+    {
+      category_id: '473732ff-0bc6-4f06-9964-4e030f81a194',
+      name: 'Behringer B212D Powered Speaker',
+      price: 4950000,
+      stock: 89,
+      sold: 11,
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694570669/lectronic/productImages/B212D_P0A2E_Right_XL_l3sljl.png',
+      rating: 5,
+      description: `The EUROLIVE B212D active loudspeaker is exactly what you’ve come to expect from Behringer – more power, more features and absolutely more affordable! Our engineers have really outdone themselves, creating a self-contained PA solution that merges state-of-the-art, 550-Watt Class-D power amp technology, an ultra-low noise Mic/Line input section with volume control, integrated DSP – and exceptional portability.
+
+      Then we loaded the B212D with our best 12" long-excursion driver for incredibly deep bass, and a state-of-the-art 1.35" aluminum-diaphragm compression driver for exceptional high-frequency reproduction. The B212D professional active loudspeaker is destined to become a legend in its own right, alongside the other EUROLIVE models that have made Behringer the world leader in active loudspeakers. `
+    },
+    
+    {
+      category_id: '473732ff-0bc6-4f06-9964-4e030f81a194',
+      name: 'Behringer EPS500MP3 Powered Speakers',
+      price: 11000000,
+      stock: 99,
+      sold: 1,
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694570506/lectronic/productImages/EPS500MP3_P0AA8_Right_XL_xcfxfg.png',
+      rating: 5,
+      description: `Looking for the ultimate, all-in-one portable PA system? The EUROPORT EPS500MP3 sets up in less than five minutes and delivers articulate, high fidelity performance – yet weighs only 41.3 lbs/18.8 kg. Thanks to the custom-designed 2-way loudspeakers and detachable 8-channel, 500-Watt powered mixer with onboard mp3 player, Reverb and wireless microphone connectivity, the EPS500MP3 can easily fill a large-sized room with crystal-clear, vibrant sound – making you the star of your event! `
+    },
+    
+    {
+      category_id: '473732ff-0bc6-4f06-9964-4e030f81a194',
+      name: 'Behringer B1200D-PRO Powered Subwoofer',
+      price: 8990000,
+      stock: 96,
+      sold: 4,
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694570222/lectronic/productImages/B1200D-PRO_P0A9M_Left_XL_dlzxlv.png',
+      rating: 5,
+      description: `Our EUROLIVE B1200D-PRO 500-Watt active subwoofer provides the ultimate in low-frequency reproduction, and the built-in stereo crossover makes it ideally suited for use with any of our active 2-way loudspeakers. Packed with a powerful 500-Watt Class-D amplifier, 15" long-excursion Low-Frequency (LF) transducer and an incredible array of professional features, the B1200DPRO produces extreme levels of low-end punch, with the definition and clarity typically reserved for much larger systems!
+
+      Put simply, these cool-running systems are much lighter, making them ultra-easy to transport and set up – and our no-compromise design means you get amazingly-deep, chest-pounding bass that will keep the party going all night long.`
+    },
+    
+    {
+      category_id: 'ab278db8-e0c4-4e28-9007-6029e3693a03',
+      name: 'Behringer GIC-1000 Instrument Cable',
+      price: '300000',
+      stock: '56',
+      sold: 24,
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694571910/lectronic/productImages/GIC-1000_P0EVU_Front_XL_hxplxc.png',
+      rating: 5,
+      description: `Your instrument should be heard. Share your passion with the help of the GIC-1000. It connects your instrument directly to any TS audio input and is optimized for guitars, keyboards and amplifiers.`
+    },
+    
+    {
+      category_id: 'ab278db8-e0c4-4e28-9007-6029e3693a03',
+      name: 'Behringer GLC2-1000 Speaker Cable',
+      price: '350000',
+      stock: 67,
+      sold: 13,
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694571729/lectronic/productImages/GLC2-1000_P0EV9_Front_XL_rknxtn.png',
+      rating: 5,
+      description: `The GLC2-1000 connects your passive speaker directly to any amplifier or amplified audio source and is optimized for stage and studio applications.`
+    },
+    
+    {
+      category_id: 'ab278db8-e0c4-4e28-9007-6029e3693a03',
+      name: 'Behringer GB3002-A Guitar Stand',
+      price: 560000,
+      stock: 77,
+      sold: 23,
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694571492/lectronic/productImages/GB3002-A_P0EHL_Left_XL_ciwupb.png',
+      rating: 5,
+      description: `Behringer has designed a foldable acoustic guitar stand for easy transportation and storage. This lightweight A-frame features metal construction, rubber feet, and secure lock system to keep your guitar stand in place. It is covered with soft padding which helps ensure your guitar is safe in place.`
+    },
+    
+    {
+      category_id: 'ab278db8-e0c4-4e28-9007-6029e3693a03',
+      name: 'Behringer SM5002 Loudspeaker Stand',
+      price: 1492000,
+      stock: 93,
+      sold: 7,
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694571363/lectronic/productImages/SM5002_P0EIL_Front_XL_dzaymp.png',
+      rating: 5,
+      description: `Designed to support studio loudspeakers with max weight of 55 lbs (25 kg), the SM5002 provides reliable and rugged speaker placement. The dual floor-standing speaker stand mount design can be used for a wide range of studio monitor, hi-fi, home theater or satellite speakers.
+
+      Safe mounting with precise height adjustment in 5 steps from 3 ft (0.93 m) up to 3.8 ft (1.15 m) ensures proper placement. The triangle base mount design and large 10” x 10” (25 x 25 cm) metal platform with soft rubberized padding allows secure and stable monitor speaker placement.`
+    },
+    
+    {
+      category_id: 'ab278db8-e0c4-4e28-9007-6029e3693a03',
+      name: 'Behringer SM2001 Loudspeaker Stand',
+      price: 760000,
+      stock: 85,
+      sold: 15,
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1694571305/lectronic/productImages/SM2001_P0EJ4_Left_XL_fckqbs.png',
+      rating: 5,
+      description: `Designed to support studio loudspeakers with max weight of 18 lbs (8.17 kg), the SM2001 provides reliable and rugged speaker placement. The desk-standing speaker stand mount design can be used for a wide range of studio monitor, hi-fi, home theater or satellite speakers.
+
+      Safe mounting with precise height adjustment in 5 steps from 3 ft (0.30 m) up to 3.8 ft (0.51 m) ensures proper placement. The floor base mount design and large 9.5” x 9.5” (23 x 23 cm) metal platform with soft rubberized padding allows secure and stable monitor speaker placement.`
     },
     
     // {
