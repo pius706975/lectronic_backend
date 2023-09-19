@@ -10,7 +10,8 @@ module.exports = {
       password: '$2b$10$sfkjVmyIr7xX.CFurjFBkuvc6KKTSFfPgSvGHzKiVuQb3miGS29yy',
       address: 'Ghost Cave Street',
       phone_number: '081244556678',
-      date_of_birth: '17-02-1999',
+      date_of_birth: '1999-02-17',
+      gender: 'male',
       image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1690872849/lectronic/default_picture_friqcz.png',
       role: 'admin',
       is_verified: true
@@ -22,8 +23,9 @@ module.exports = {
       password: '$2b$10$qYCYLV6S5M9WzGGVmO5nhumdIZ7VKpeJ8pPTD.Em7sCL.vETJEqBO',
       address: 'Jump 21 Street',
       phone_number: '081232320099',
-      date_of_birth: '17-02-1989',
-      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1690872849/lectronic/default_picture_friqcz.png',
+      date_of_birth: '1989-02-17',
+      gender: 'male',
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1695111870/lectronic/userImages/nye2dsd11r53ab0pvx5o.jpg',
       role: 'user',
       is_verified: true
     }], {})

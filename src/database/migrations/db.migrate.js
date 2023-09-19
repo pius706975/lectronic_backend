@@ -11,7 +11,7 @@ module.exports = {
         password VARCHAR NOT NULL,
         address TEXT,
         phone_number VARCHAR,
-        date_of_birth VARCHAR,
+        date_of_birth DATE,
         gender VARCHAR,
         image VARCHAR,
         role VARCHAR DEFAULT 'user',
