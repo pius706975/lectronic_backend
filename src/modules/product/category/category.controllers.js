@@ -99,11 +99,6 @@ controller.DeleteCategory = async (req, res)=>{
 
 controller.GetAllCategories = async (req, res)=>{
     try {
-        const user = req.userData
-        if (!user) {
-            return response(res, 401, {message: 'You need to login first'})
-        }
-
         const result = await models.GetAllCategories()
         if (result.length <= 0) {
             return response(res, 404, {message: 'Empty data'})

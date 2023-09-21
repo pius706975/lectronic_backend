@@ -9,7 +9,7 @@ categoryRouters.put('/:category_id', Authentication, IsAdmin, ctrl.UpdateCategor
 
 categoryRouters.delete('/:category_id', Authentication, IsAdmin, ctrl.DeleteCategory)
 
-categoryRouters.get('', Authentication, IsAdmin, ctrl.GetAllCategories)
+categoryRouters.get('', ctrl.GetAllCategories)
 categoryRouters.get('/:category_id', Authentication, IsAdmin, ctrl.GetCategoryByID)
 categoryRouters.get('', Authentication, IsAdmin, ctrl.GetCategoryByName)
 
