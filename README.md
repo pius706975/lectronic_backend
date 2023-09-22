@@ -2,7 +2,7 @@
 Lectronic is an e-commerce that provides electronic products such as headphone, audio speaker, etc.
 
 ##Tech Stack
-[Node JS](https://nodejs.org/en/about)
+### <a href="https://nodejs.org/en/about" target="blank">Node JS</a>
 
 ##
 ## Application installation steps
