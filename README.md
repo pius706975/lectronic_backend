@@ -1,8 +1,12 @@
 # Lectronic Node.js (Back-end)
 Lectronic is an e-commerce that provides electronic products such as headphone, audio speaker, etc.
 
-##Tech Stack
-### <a href="https://nodejs.org/en/about" target="blank">Node JS</a>
+## Tech Stack
+### [Node JS](https://nodejs.org/en/about)
+### [Javascript](https://devdocs.io/javascript/)
+### [Express JS](https://expressjs.com/)
+### [PostgreSQL](https://www.postgresql.org/)
+### [Sequelize](https://sequelize.org/)
 
 ##
 ## Application installation steps
