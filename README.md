@@ -1,6 +1,9 @@
 # Lectronic Node.js (Back-end)
 Lectronic is an e-commerce that provides electronic products such as headphone, audio speaker, etc.
 
+##Tech Stack
+[Node JS](https://nodejs.org/en/about)
+
 ##
 ## Application installation steps
 Install npm dependencies in the main folder that contains package.json so that npm will be initiated and all of the dependencies will be installed.
@@ -68,7 +71,7 @@ Before execute database migration and seeds, check "config.json" in "src/databas
 
 ``` 
 
-If re-configure "config.json" is done, do database migration after creating data in postgreSQL.
+If re-configure "config.json" is done, do database migration after creating database in postgreSQL.
 ``` bash
   # to create all tables
   npm run migrate:up
