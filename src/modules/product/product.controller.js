@@ -209,12 +209,25 @@ controller.GetProductByName = async (req, res)=>{
         const limitation = limit ? parseInt(limit) : 5
         const offset = pagination === 1 ? 0 : limitation * (pagination - 1)
         const name = req.query.name
+        const totalProductByName = await models.GetTotalProductName(name)
+        // const productTotal = totalProductByName.find(name.toLowerCase())
+        if (totalProductByName === 0) {
+            return response(res, 404, {message: 'Product not found'})
+        }
+
+        const totalProducts = totalProductByName
+        const totalPages = Math.ceil(totalProducts / limitation)
+
         const result = await models.GetProductByName({name: name, limit: limitation, offset})
         if (result.length <= 0) {
             return response(res, 404, {message: 'Product not found'})
         }
 
-        return response(res, 200, result)
+        return response(res, 200, {
+            result: result,
+            totalRows: totalProducts,
+            totalPages: totalPages
+        })
     } catch (error) {
         console.log(error)
         return response(res, 500, error.message)

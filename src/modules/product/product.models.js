@@ -189,6 +189,23 @@ models.GetTotalProducts = ()=>{
     })
 }
 
+models.GetTotalProductName = (name)=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            SELECT COUNT(*) AS total_products
+            FROM products
+            WHERE name ILIKE $1
+            `, 
+            [`%${name}%`])
+        .then((res)=>{
+            resolve(res.rows[0].total_products)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
 models.GetTotalProductCategories = ()=>{
 
     return new Promise((resolve, reject)=>{
