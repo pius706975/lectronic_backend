@@ -108,7 +108,7 @@ controller.GetProfile = async (req, res)=>{
         return response(res, 200, getProfile)
     } catch (error) {
         console.log(error)
-        return response()
+        return response(res, 500, error.message)
     }
 }
 

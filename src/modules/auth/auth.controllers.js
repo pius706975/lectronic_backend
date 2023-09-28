@@ -24,19 +24,21 @@ controllers.Register = async (req, res)=>{
             return hasLength && hasUppercase && hasSymbol && hasNumber
         }
 
+        if (!req.body.email || !req.body.password) {
+            return response(res, 400, {message: 'Email or password cannot be empty'})
+        } else if (!validator.isEmail(req.body.email)) {
+            return response(res, 400, {message: 'Invalid email'})
+        } else if (!isPasswordValid(req.body.password)) {
+            return response(res, 400, {message: 'Password must contain at least 8 characters, 1 uppercase letter, 1 symbol, and 1 number'})
+        } 
+
         const saltRounds = 10
         const hashedPassword = await bcrypt.hashSync(req.body.password, saltRounds)
         const token_verify = await crypto.randomBytes(16).toString('hex')
         const expiredToken = new Date(Date.now() + 20000 * 60)
         const emailExists = await models.Login({email: req.body.email})
 
-        if (!req.body.email || !req.body.password) {
-            return response(res, 400, {message: 'Email or password cannot be empty'})
-        } else if (!isPasswordValid(req.body.password)) {
-            return response(res, 400, {message: 'Password must contain at least 8 characters, 1 uppercase letter, 1 symbol, and 1 number'})
-        } else if (!validator.isEmail(req.body.email)) {
-            return response(res, 400, {message: 'Invalid email'})
-        } else if (emailExists.length > 0) {
+        if (emailExists.length > 0) {
             return response(res, 400, {message: 'Email already exists'})
         }
 
