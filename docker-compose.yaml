@@ -1,0 +1,22 @@
+version: "3"
+services:
+  db: 
+    image: postgres:14.7
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: piuspius
+      POSTGRES_USER: piuspius
+      POSTGRES_DB: lectronic_js
+    ports:
+      - 5433:5432
+
+  be:
+    image: lectronic/be:1
+    working_dir: /app
+    container_name: be
+    volumes:
+      - ./:/app
+    ports:
+      - 8009:8070
+    depends_on:
+      - db
