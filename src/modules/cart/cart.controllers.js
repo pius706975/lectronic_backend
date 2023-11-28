@@ -4,7 +4,7 @@ const multer = require('multer')
 const models = require('./cart.models')
 const stock = require('../product/product.models')
 const formData = multer().none()
-const discount = require('../../libs/get.discount')
+// const discount = require('../../libs/get.discount')
 
 controller.AddToCart = async (req, res)=>{
     try {
@@ -32,15 +32,15 @@ controller.AddToCart = async (req, res)=>{
 
             const price = parseInt(priceData[0].price)
             const getItemPrices = price * qty
-            const {discountedPrice, appliedDiscount} = discount(getItemPrices)
+            // const {discountedPrice, appliedDiscount} = discount(getItemPrices)
 
             const queries = {
                 user_id: user.user_id,
                 product_id: product_id,
                 qty: qty, 
                 item_prices: getItemPrices,
-                discount: appliedDiscount,
-                total: discountedPrice,
+                // discount: appliedDiscount,
+                total: getItemPrices,
                 status: req.body.status ? req.body.status : 'Ready to pay'
             }
 
@@ -156,7 +156,6 @@ controller.GetAllItems = async (req, res)=>{
                 },
                 qty: data.qty,
                 item_prices: data.item_prices,
-                discount: data.discount,
                 total: data.total,
                 status: data.status,
                 created_at: data.created_at,
@@ -200,7 +199,6 @@ controller.GetItemByName = async (req, res)=>{
                 },
                 qty: data.qty,
                 item_prices: data.item_prices,
-                discount: data.discount,
                 total: data.total,
                 status: data.status,
                 created_at: data.created_at,
@@ -242,7 +240,6 @@ controller.GetItemByID = async (req, res)=>{
                 },
                 qty: data.qty,
                 item_prices: data.item_prices,
-                discount: data.discount,
                 total: data.total,
                 status: data.status,
                 created_at: data.created_at,

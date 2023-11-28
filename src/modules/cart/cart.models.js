@@ -1,14 +1,14 @@
 const models = {}
 const db = require('../../database/db_config/db.config')
 
-models.AddToCart = ({user_id, product_id, qty, item_prices, discount, total, status}) => {
+models.AddToCart = ({user_id, product_id, qty, item_prices, total, status}) => {
     
     return new Promise((resolve, reject) => {
         db.query(`
-            INSERT INTO cart (user_id, product_id, qty, item_prices, discount, total, status) 
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            INSERT INTO cart (user_id, product_id, qty, item_prices, total, status) 
+            VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING *`, 
-            [user_id, product_id, qty, item_prices, discount, total, status])
+            [user_id, product_id, qty, item_prices, total, status])
         .then((res) => {
             resolve(res.rows);
         }).catch((err) => {
@@ -62,7 +62,6 @@ models.GetAllItems = ()=>{
                 cart.product_id,
                 cart.qty,
                 cart.item_prices,
-                cart.discount,
                 cart.total,
                 cart.status,
                 cart.created_at,
@@ -97,7 +96,6 @@ models.GetItemByName = ({product_name})=>{
                 cart.product_id,
                 cart.qty,
                 cart.item_prices,
-                cart.discount,
                 cart.total,
                 cart.status,
                 cart.created_at,
@@ -133,7 +131,6 @@ models.GetItemByID = ({cart_id})=>{
                 cart.product_id,
                 cart.qty,
                 cart.item_prices,
-                cart.discount,
                 cart.total,
                 cart.status,
                 cart.created_at,
