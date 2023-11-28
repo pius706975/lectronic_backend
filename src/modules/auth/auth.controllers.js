@@ -6,24 +6,10 @@ const jwt = require('jsonwebtoken')
 const sendEmail = require('../../libs/node.mailer')
 const crypto = require('crypto')
 const validator = require('validator')
+const isPasswordValid = require('../../libs/password.check')
 
 controllers.Register = async (req, res)=>{
     try {
-        
-        const isPasswordValid = (password)=>{
-            const lengthRegex = /.{8,}/
-            const uppercaseRegex = /[A-Z]/
-            const symbolRegex = /[\W_]/
-            const numberRegex = /\d/
-
-            const hasLength = lengthRegex.test(password)
-            const hasUppercase = uppercaseRegex.test(password)
-            const hasSymbol = symbolRegex.test(password)
-            const hasNumber = numberRegex.test(password)
-
-            return hasLength && hasUppercase && hasSymbol && hasNumber
-        }
-
         if (!req.body.email || !req.body.password) {
             return response(res, 400, {message: 'Email or password cannot be empty'})
         } else if (!validator.isEmail(req.body.email)) {
@@ -79,7 +65,7 @@ controllers.Login = async (req, res)=>{
         const user = result[0]
         if (!user) {
             return response(res, 401, {message: 'Email or password is incorrect'})
-        }
+        } 
         
         const comparedData = await bcrypt.compareSync(password, user.password)
         if (!comparedData) {

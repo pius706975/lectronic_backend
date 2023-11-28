@@ -37,7 +37,7 @@ controller.AddToCart = async (req, res)=>{
             const queries = {
                 user_id: user.user_id,
                 product_id: product_id,
-                qty: qty,
+                qty: qty, 
                 item_prices: getItemPrices,
                 discount: appliedDiscount,
                 total: discountedPrice,
@@ -130,14 +130,85 @@ controller.UpdateItem = async (req, res)=>{
 
 controller.GetAllItems = async (req, res)=>{
     try {
-        const result = await models.GetAllItems()
-        if (result.length <= 0) {
+        const user = req.userData
+        if (!user) {
+            return response(res, 401, {message: 'You need to login first'})
+        }
+        
+        const products = await models.GetAllItems()
+        if (products.length <= 0) {
             return response(res, 404, {message: `You haven't added any products yet`})
         }
+
+        const result = products.map(data => ({
+            cart_id: data.cart_id,
+            user_id: data.user_id,
+            product_data: {
+                product_id: data.product_id,
+                category_name: data.category_name,
+                name: data.product_name,
+                price: data.price,
+                stock: data.stock,
+                sold: data.sold,
+                image: data.image,
+                rating: data.rating,
+                description: data.description,
+                },
+                qty: data.qty,
+                item_prices: data.item_prices,
+                discount: data.discount,
+                total: data.total,
+                status: data.status,
+                created_at: data.created_at,
+                updated_at: data.updated_at,
+        }))
 
         return response(res, 200, result)
     } catch (error) {
         console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
+controller.GetItemByName = async (req, res)=>{
+    try {
+        const user = req.userData
+        if (!user) {
+            return response(res, 401, {message: 'You need to login first'})
+        }
+
+        const product_name = req.query.product_name
+
+        const products = await models.GetItemByName({product_name: product_name})
+        if (products.length <= 0) {
+            return response(res, 404, {message: 'Item not found'})
+        }
+
+        const result = products.map(data => ({
+            cart_id: data.cart_id,
+            user_id: data.user_id,
+            product_data: {
+                product_id: data.product_id,
+                category_name: data.category_name,
+                name: data.product_name,
+                price: data.price,
+                stock: data.stock,
+                sold: data.sold,
+                image: data.image,
+                rating: data.rating,
+                description: data.description,
+                },
+                qty: data.qty,
+                item_prices: data.item_prices,
+                discount: data.discount,
+                total: data.total,
+                status: data.status,
+                created_at: data.created_at,
+                updated_at: data.updated_at,
+        }))
+
+        return response(res, 200, result)
+    } catch (error) {
         return response(res, 500, error.message)
     }
 }
@@ -150,10 +221,33 @@ controller.GetItemByID = async (req, res)=>{
         }
 
         const cart_id = req.params.cart_id
-        const result = await models.GetItemByID({cart_id})
-        if (result.length <= 0) {
+        const product = await models.GetItemByID({cart_id})
+        if (product.length <= 0) {
             return response(res, 404, {message: 'Item not found'})
         }
+
+        const result = product.map(data => ({
+            cart_id: data.cart_id,
+            user_id: data.user_id,
+            product_data: {
+                product_id: data.product_id,
+                category_id: data.category_id,
+                name: data.prod_name,
+                price: data.price,
+                stock: data.stock,
+                sold: data.sold,
+                image: data.image,
+                rating: data.rating,
+                description: data.description,
+                },
+                qty: data.qty,
+                item_prices: data.item_prices,
+                discount: data.discount,
+                total: data.total,
+                status: data.status,
+                created_at: data.created_at,
+                updated_at: data.updated_at,
+        }))
 
         return response(res, 200, result)
     } catch (error) {

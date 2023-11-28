@@ -1,7 +1,7 @@
 const express = require('express')
 const cartRouters = express.Router()
 const ctrl = require('./cart.controllers')
-const {Authentication, IsAdmin, IsUser} = require('../../middleware/middle.auth')
+const {Authentication, IsUser} = require('../../middleware/middle.auth')
 
 cartRouters.post('', Authentication, IsUser, ctrl.AddToCart)
 
@@ -11,5 +11,6 @@ cartRouters.put('/id=:cart_id', Authentication, IsUser, ctrl.UpdateItem)
 
 cartRouters.get('', Authentication, IsUser, ctrl.GetAllItems)
 cartRouters.get('/id=:cart_id', Authentication, IsUser, ctrl.GetItemByID)
+cartRouters.get('/search', Authentication, IsUser, ctrl.GetItemByName)
 
 module.exports = cartRouters

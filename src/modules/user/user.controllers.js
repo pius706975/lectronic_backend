@@ -5,6 +5,7 @@ const multer = require('multer')
 const formData = multer().none()
 const UploadFile = require('../../middleware/upload/cloudinary')
 const bcrypt = require('bcrypt')
+const isPasswordValid = require('../../libs/password.check')
 
 controller.UpdateUser = async (req, res)=>{
 
@@ -56,24 +57,10 @@ controller.UpdateProfilePicture = async (req, res)=>{
 
 controller.UpdatePassword = async (req, res)=>{
     try {
-        const isValidPassword = (password)=>{
-            const lengthRegex = /.{8,}/
-            const uppercaseRegex = /[A-Z]/
-            const symbolRegex = /[\W_]/
-            const numberRegex = /\d/
-
-            const hasLength = lengthRegex.test(password)
-            const hasUppercase = uppercaseRegex.test(password)
-            const hasSymbol = symbolRegex.test(password)
-            const hasNumber = numberRegex.test(password)
-
-            return hasLength && hasUppercase && hasSymbol && hasNumber
-        }
-        
         const saltRounds = 10
         const hassedPassword = await bcrypt.hashSync(req.body.password, saltRounds)
 
-        if (!isValidPassword(req.body.password)) {
+        if (!isPasswordValid(req.body.password)) {
             return response(res, 400, {message: 'Password must contain at least 8 characters, 1 uppercase letter, 1 symbol, and 1 number'})
         }
 
