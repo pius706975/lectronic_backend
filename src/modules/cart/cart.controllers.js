@@ -128,6 +128,56 @@ controller.UpdateItem = async (req, res)=>{
     }
 }
 
+controller.UpdateItemQtyIncrease = async (req, res)=>{
+    try {
+        const user = req.userData
+        if (!user) {
+            return response(res, 401, {message: 'You need to login first'})
+        }
+
+        const cart_id = req.params.cart_id
+
+        const updatedItem = await models.UpdateItemQtyIncrease({cart_id})
+
+        if (updatedItem && updatedItem.length > 0) {
+            return response(res, 200, {
+                message: 'Item qty increased',
+                data: updatedItem[0]
+            })
+        } else {
+            return response(res, 404, {message: 'Item not found'})
+        }
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
+controller.UpdateItemQtyDecrease = async (req, res)=>{
+    try {
+        const user = req.userData
+        if (!user) {
+            return response(res, 401, {message: 'You need to login first'})
+        }
+
+        const cart_id = req.params.cart_id
+
+        const updatedItem = await models.UpdateItemQtyDecrease({cart_id})
+
+        if (updatedItem && updatedItem.length > 0) {
+            return response(res, 200, {
+                message: 'Item qty increased',
+                data: updatedItem[0]
+            })
+        } else {
+            return response(res, 404, {message: 'Item not found'})
+        }
+    } catch (error) {
+        console.log(error)
+        return response(res, 500, error.message)
+    }
+}
+
 controller.GetAllItems = async (req, res)=>{
     try {
         const user = req.userData

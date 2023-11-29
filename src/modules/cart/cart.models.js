@@ -34,7 +34,7 @@ models.DeleteItem = ({cart_id})=>{
 
 models.UpdateItem = ({qty, item_prices, discount, total, cart_id})=>{
 
-    return new Promise((resolve, rejects)=>{
+    return new Promise((resolve, reject)=>{
         db.query(`
             UPDATE cart
             SET qty = COALESCE($1, qty),
@@ -44,6 +44,44 @@ models.UpdateItem = ({qty, item_prices, discount, total, cart_id})=>{
             WHERE cart_id = $5
             RETURNING *`,
             [qty, item_prices, discount, total, cart_id])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.UpdateItemQtyIncrease = ({cart_id})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            UPDATE cart
+            SET qty = qty + 1,
+                item_prices = COALESCE(item_prices, 0) + COALESCE(item_prices, 0) / qty,
+                total = qty * (COALESCE(item_prices, 0) + COALESCE(item_prices, 0) / qty)
+            WHERE cart_id = $1
+            RETURNING *`,
+            [cart_id])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+models.UpdateItemQtyDecrease = ({cart_id})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            UPDATE cart
+            SET qty = qty - 1,
+                item_prices = COALESCE(item_prices, 0) - COALESCE(item_prices, 0) / qty,
+                total = qty * (COALESCE(item_prices, 0) - COALESCE(item_prices, 0) / qty)
+            WHERE cart_id = $1
+            RETURNING *`,
+            [cart_id])
         .then((res)=>{
             resolve(res.rows)
         }).catch((err)=>{
