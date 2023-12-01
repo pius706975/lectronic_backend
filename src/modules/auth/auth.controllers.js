@@ -75,7 +75,8 @@ controllers.Login = async (req, res)=>{
         } 
 
         delete user.password
-        const token = `Bearer ${jwt.sign(user, process.env.JWT_SECRET, {expiresIn: '1d'})}`
+        
+        const token = `Bearer ${jwt.sign(user, process.env.JWT_SECRET, {expiresIn: '12h'})}`
         const responseData = {token}
 
         return response(res, 200, responseData)

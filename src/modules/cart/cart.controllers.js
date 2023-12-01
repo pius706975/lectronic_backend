@@ -138,12 +138,15 @@ controller.UpdateItemQtyIncrease = async (req, res)=>{
         const cart_id = req.params.cart_id
 
         const updatedItem = await models.UpdateItemQtyIncrease({cart_id})
+        
 
         if (updatedItem && updatedItem.length > 0) {
             return response(res, 200, {
                 message: 'Item qty increased',
                 data: updatedItem[0]
             })
+        } else if (updatedItem && updatedItem.length > 0) {
+
         } else {
             return response(res, 404, {message: 'Item not found'})
         }
@@ -187,7 +190,7 @@ controller.GetAllItems = async (req, res)=>{
         
         const products = await models.GetAllItems()
         if (products.length <= 0) {
-            return response(res, 404, {message: `You haven't added any products yet`})
+            return response(res, 404, {message: `You haven't added any product yet`})
         }
 
         const result = products.map(data => ({

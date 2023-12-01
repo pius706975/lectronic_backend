@@ -207,4 +207,20 @@ models.GetItemPrice = ({product_id})=>{
     })
 }
 
+models.GetItemPrice = ({product_id})=>{
+
+    return new Promise((resolve, reject)=>{
+        db.query(`
+            SELECT p.product_id, p.price FROM products p
+            LEFT JOIN cart c ON p.product_id = c.product_id 
+            WHERE p.product_id = $1`,
+            [product_id])
+        .then((res)=>{
+            resolve(res.rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
 module.exports = models
