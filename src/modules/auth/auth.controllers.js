@@ -4,7 +4,7 @@ const response = require('../../libs/responses')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendEmail = require('../../libs/node.mailer')
-const crypto = require('crypto')
+const sodium = require('libsodium-wrappers')
 const validator = require('validator')
 const isPasswordValid = require('../../libs/password.check')
 
@@ -20,7 +20,7 @@ controllers.Register = async (req, res)=>{
 
         const saltRounds = 10
         const hashedPassword = await bcrypt.hashSync(req.body.password, saltRounds)
-        const token_verify = await crypto.randomBytes(16).toString('hex')
+        const token_verify = await sodium.to_hex(sodium.randombytes_buf(16))
         const expiredToken = new Date(Date.now() + 20000 * 60)
         const emailExists = await models.Login({email: req.body.email})
 
