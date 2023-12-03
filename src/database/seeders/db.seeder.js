@@ -25,7 +25,7 @@ module.exports = {
       phone_number: '081232320099',
       date_of_birth: '1989-02-17',
       gender: 'male',
-      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1695111870/lectronic/userImages/nye2dsd11r53ab0pvx5o.jpg',
+      image: 'https://res.cloudinary.com/dccomkorf/image/upload/v1695194185/lectronic/userImages/mmrxcjrcundraxqefopx.png',
       role: 'user',
       is_verified: true
     }], {})

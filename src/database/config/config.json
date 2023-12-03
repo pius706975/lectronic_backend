@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "piuspius",
-    "password": "piuspius",
-    "database": "lectronic_js",
-    "host": "localhost",
+    "username": "postgres",
+    "password": "pr.cvhf.12345",
+    "database": "postgres",
+    "host": "db.lsrfrirlodvachqvgese.supabase.co",
     "dialect": "postgres"
   },
   "test": {
-    "username": "piuspius",
-    "password": "piuspius",
-    "database": "lectronic_js_test",
-    "host": "localhost",
+    "username": "postgres",
+    "password": "pr.cvhf.12345",
+    "database": "postgres_test",
+    "host": "db.lsrfrirlodvachqvgese.supabase.co",
     "dialect": "postgres"
   },
   "production": {
-    "username": "piuspius",
-    "password": "piuspius",
-    "database": "lectronic_js_production",
-    "host": "localhost",
+    "username": "postgres",
+    "password": "pr.cvhf.12345",
+    "database": "postgres_production",
+    "host": "db.lsrfrirlodvachqvgese.supabase.co",
     "dialect": "postgres"
   }
 }
