@@ -7,7 +7,7 @@ const db = require('./src/database/db_config/db.config')
 const port = process.env.APP_PORT
 
 const corsOptions = {
-    origin: 'http://localhost:3000', //react js app
+    origin: '*', //react js app
     optionsSuccessStatus: 200
 }
 
