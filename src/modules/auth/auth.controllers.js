@@ -118,8 +118,12 @@ controllers.VerifyEmail = async (req, res)=>{
 
         const user = result[0]
         const timeNow = Date.now()
-        const expiredAt = new Date(user.token_expire).toLocaleString('en', {timeZone: 'Asia/Jakarta'})
-        const expiredToken = new Date(timeNow).toLocaleString('en', {timeZone: 'Asia/Jakarta'})
+        // const expiredAt = new Date(user.token_expire).toLocaleString('en', {timeZone: 'Asia/Jakarta'})
+        // const expiredToken = new Date(timeNow).toLocaleString('en', {timeZone: 'Asia/Jakarta'})
+        const expiredAt = new Date(user.token_expire).toISOString()
+        const expiredToken = new Date(timeNow).toISOString()
+
+
 
         if (user.token_verify !== token.token_verify) {
             return response(res, 401, {message: 'Email verification failed'})
