@@ -97,6 +97,7 @@ const sendEmail = async (email, subject, link)=>{
             `
         })
     } catch (error) {
+        // console.log(error.message)
         return response(res, 500, error)
     }
 }

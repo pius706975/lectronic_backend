@@ -157,7 +157,7 @@ controllers.ResendVerification = async (req, res)=>{
             return response(res, 401, {message: 'Email has been verified'})
         }
 
-        const token_verify = await crypto.randomBytes(16).toString('hex')
+        const token_verify = await sodium.to_hex(sodium.randombytes_buf(16))
         const expiredAt = new Date(Date.now() + 20000 * 60)
 
         const queries = {
