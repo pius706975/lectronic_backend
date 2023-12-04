@@ -10,7 +10,9 @@ const isPasswordValid = require('../../libs/password.check')
 
 controllers.Register = async (req, res)=>{
     try {
-        if (!req.body.email || !req.body.password) {
+        if (!req.body.name) {
+            return response(res, 400, {message: 'Name cannot be empty'})
+        }else if (!req.body.email || !req.body.password) {
             return response(res, 400, {message: 'Email or password cannot be empty'})
         } else if (!validator.isEmail(req.body.email)) {
             return response(res, 400, {message: 'Invalid email'})
