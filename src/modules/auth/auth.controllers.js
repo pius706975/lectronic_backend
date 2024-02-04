@@ -10,14 +10,16 @@ const isPasswordValid = require('../../libs/password.check')
 
 controllers.Register = async (req, res)=>{
     try {
+        const passwordValidation = isPasswordValid(req.body.password)
+
         if (!req.body.name) {
             return response(res, 400, {message: 'Name cannot be empty'})
         }else if (!req.body.email || !req.body.password) {
             return response(res, 400, {message: 'Email or password cannot be empty'})
         } else if (!validator.isEmail(req.body.email)) {
             return response(res, 400, {message: 'Invalid email'})
-        } else if (!isPasswordValid(req.body.password)) {
-            return response(res, 400, {message: 'Password must contain at least 8 characters, 1 uppercase letter, 1 symbol, and 1 number'})
+        } else if (passwordValidation !== true) {
+            return response(res, 400, {message: passwordValidation.join(', ')})
         } 
 
         const saltRounds = 10
@@ -122,8 +124,6 @@ controllers.VerifyEmail = async (req, res)=>{
         // const expiredToken = new Date(timeNow).toLocaleString('en', {timeZone: 'Asia/Jakarta'})
         const expiredAt = new Date(user.token_expire).toISOString()
         const expiredToken = new Date(timeNow).toISOString()
-
-
 
         if (user.token_verify !== token.token_verify) {
             return response(res, 401, {message: 'Email verification failed'})
